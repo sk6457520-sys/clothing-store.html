@@ -1,1 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Clothing Store India - Admin Panel</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#4f46e5,#9333ea,#ec4899);
+  min-height:100vh;
+  color:#222;
+}
+
+/* TOP BRAND */
+
+.brand-header{
+  width:100%;
+  text-align:center;
+  padding:28px 15px 20px;
+  color:white;
+}
+
+.brand-header h1{
+  margin:0;
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:0 3px 10px rgba(0,0,0,.25);
+}
+
+.brand-header p{
+  margin:7px 0 0;
+  font-size:15px;
+  opacity:.95;
+}
+
+
+/* LOGIN */
+
+.login-area{
+  max-width:450px;
+  margin:15px auto 40px;
+  padding:15px;
+}
+
+.login-card{
+  background:rgba(255,255,255,.97);
+  border-radius:22px;
+  padding:30px 25px;
+  box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
+
+.login-icon{
+  width:75px;
+  height:75px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  background:linear-gradient(135deg,#4f46e5,#ec4899);
+  color:white;
+  box-shadow:0 8px 20px rgba(79,70,229,.3);
+}
+
+.login-card h2{
+  text-align:center;
+  margin:8px 0 5px;
+  font-size:24px;
+}
+
+.login-subtitle{
+  text-align:center;
+  color:#777;
+  margin-bottom:25px;
+  font-size:14px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:10px 0 6px;
+  color:#333;
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:11px;
+  font-size:16px;
+  outline:none;
+  background:#fff;
+}
+
+input:focus,select:focus{
+  border-color:#7c3aed;
+  box-shadow:0 0 0 3px rgba(124,58,237,.12);
+}
+
+.login-btn{
+  width:100%;
+  padding:15px;
+  margin-top:8px;
+  border:0;
+  border-radius:11px;
+  background:linear-gradient(135deg,#4f46e5,#9333ea,#ec4899);
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 7px 18px rgba(124,58,237,.3);
+}
+
+.login-btn:active{
+  transform:scale(.98);
+}
+
+.forgot-btn{
+  width:100%;
+  background:none;
+  border:0;
+  color:#6d28d9;
+  font-weight:bold;
+  margin-top:12px;
+  cursor:pointer;
+}
+
+.secure-text{
+  text-align:center;
+  color:#888;
+  font-size:12px;
+  margin-top:20px;
+}
+
+
+/* MESSAGE */
+
+.message{
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  background:#f3f4f6;
+  text-align:center;
+  font-size:14px;
+}
+
+
+/* ADMIN */
+
+.admin-header{
+  background:rgba(255,255,255,.96);
+  padding:20px;
+  text-align:center;
+  box-shadow:0 3px 15px rgba(0,0,0,.12);
+}
+
+.admin-header h2{
+  margin:0;
+  color:#4f46e5;
+}
+
+.admin-header p{
+  margin:5px 0 0;
+  color:#777;
+}
+
+.container{
+  max-width:950px;
+  margin:auto;
+  padding:15px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  margin:18px 0;
+  border-radius:16px;
+  box-shadow:0 5px 20px rgba(0,0,0,.12);
+}
+
+.card h2{
+  margin-top:0;
+  color:#4f46e5;
+}
+
+button{
+  border:0;
+  padding:12px 17px;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:4px;
+}
+
+.green{
+  background:#16a34a;
+  color:white;
+}
+
+.blue{
+  background:#2563eb;
+  color:white;
+}
+
+.red{
+  background:#dc2626;
+  color:white;
+}
+
+.gray{
+  background:#6b7280;
+  color:white;
+}
+
+.hidden{
+  display:none !important;
+}
+
+
+/* LOGO */
+
+.logo-preview{
+  width:140px;
+  height:140px;
+  object-fit:contain;
+  border:1px solid #ddd;
+  border-radius:12px;
+  display:block;
+  margin-top:10px;
+  background:#f8f8f8;
+}
+
+
+/* PRODUCTS */
+
+.product{
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:12px;
+  margin:12px 0;
+}
+
+.product img{
+  width:170px;
+  height:170px;
+  object-fit:contain;
+  display:block;
+  background:#f5f5f5;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+  color:#16a34a;
+}
+
+
+/* ORDERS */
+
+.order{
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:12px;
+  margin:12px 0;
+  word-break:break-word;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .brand-header h1{
+    font-size:25px;
+  }
+
+  .login-card{
+    padding:25px 18px;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+  <div class="brand-header">
+
+    <h1>🛍️ CLOTHING STORE INDIA</h1>
+
+    <p>Professional Admin Management System</p>
+
+  </div>
+
+
+  <div class="login-area">
+
+    <div class="login-card">
+
+      <div class="login-icon">
+        🔐
+      </div>
+
+      <h2>Administrator Login</h2>
+
+      <div class="login-subtitle">
+        Secure access to your store
+      </div>
+
+
+      <label>Admin Email</label>
+
+      <input
+        id="email"
+        type="email"
+        placeholder="Enter admin email"
+        value="sk6457520@gmail.com"
+      >
+
+
+      <label>Password</label>
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Enter password"
+      >
+
+
+      <button
+        id="loginBtn"
+        class="login-btn"
+        type="button"
+      >
+        LOGIN
+      </button>
+
+
+      <button
+        id="forgotBtn"
+        class="forgot-btn"
+        type="button"
+      >
+        🔑 Forgot Password?
+      </button>
+
+
+      <div id="loginMsg"></div>
+
+
+      <div class="secure-text">
+        🔒 Secure Admin Access
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ADMIN PAGE -->
+
+<div id="adminPage" class="hidden">
+
+
+  <div class="admin-header">
+
+    <h2>🛍️ CLOTHING STORE INDIA</h2>
+
+    <p>Admin Dashboard</p>
+
+  </div>
+
+
+  <div class="container">
+
+
+    <!-- STORE SETTINGS -->
+
+    <div class="card">
+
+      <h2>🏪 Store Settings</h2>
+
+      <label>Shop Name</label>
+
+      <input
+        id="storeName"
+        type="text"
+        placeholder="Shop Name"
+      >
+
+
+      <label>UPI ID</label>
+
+      <input
+        id="upiId"
+        type="text"
+        placeholder="UPI ID"
+      >
+
+
+      <label>Logo Image URL</label>
+
+      <input
+        id="logoUrl"
+        type="url"
+        placeholder="Logo Image URL"
+      >
+
+
+      <img
+        id="logoPreview"
+        class="logo-preview"
+        src=""
+        alt="Logo"
+      >
+
+
+      <br>
+
+      <button
+        id="saveSettings"
+        class="green"
+        type="button"
+      >
+        SAVE STORE SETTINGS
+      </button>
+
+
+      <div id="settingsMsg"></div>
+
+    </div>
+
+
+
+    <!-- PRODUCT -->
+
+    <div class="card">
+
+      <h2 id="productHeading">
+        ➕ Add New Product
+      </h2>
+
+
+      <input
+        id="productId"
+        type="hidden"
+      >
+
+
+      <label>Product Name</label>
+
+      <input
+        id="productName"
+        type="text"
+        placeholder="Product Name"
+      >
+
+
+      <label>Price</label>
+
+      <input
+        id="productPrice"
+        type="number"
+        placeholder="Product Price"
+      >
+
+
+      <label>Category</label>
+
+      <select id="productCategory">
+
+        <option value="Men">
+          Men
+        </option>
+
+        <option value="Women">
+          Women
+        </option>
+
+      </select>
+
+
+      <label>Product Image URL</label>
+
+      <input
+        id="productImage"
+        type="url"
+        placeholder="Product Image URL"
+      >
+
+
+      <button
+        id="saveProduct"
+        class="green"
+        type="button"
+      >
+        ADD PRODUCT
+      </button>
+
+
+      <button
+        id="cancelEdit"
+        class="gray hidden"
+        type="button"
+      >
+        CANCEL
+      </button>
+
+
+      <div id="productMsg"></div>
+
+    </div>
+
+
+
+    <!-- PRODUCTS -->
+
+    <div class="card">
+
+      <h2>👕 Your Products</h2>
+
+      <div id="products">
+        Loading...
+      </div>
+
+    </div>
+
+
+
+    <!-- ORDERS -->
+
+    <div class="card">
+
+      <h2>📦 Customer Orders</h2>
+
+
+      <button
+        id="refreshOrders"
+        class="blue"
+        type="button"
+      >
+        🔄 REFRESH ORDERS
+      </button>
+
+
+      <div id="orders">
+        Loading...
+      </div>
+
+    </div>
+
+
+
+    <!-- LOGOUT -->
+
+    <div class="card">
+
+      <button
+        id="logout"
+        class="red"
+        type="button"
+        style="width:100%;"
+      >
+        🚪 LOGOUT
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore-compat.js"></script>
+
+
+
+<script>
+
+const firebaseConfig = {
+
+  apiKey:
+  "AIzaSyDjG5fKH7apknSPMUCB3s5pVa91Hj5vMnB4",
+
+  authDomain:
+  "clothing-store-india.firebaseapp.com",
+
+  projectId:
+  "clothing-store-india",
+
+  storageBucket:
+  "clothing-store-india.firebasestorage.app",
+
+  messagingSenderId:
+  "1032694314798",
+
+  appId:
+  "1:1032694314798:web:00484f9e6fc47394ddacbf"
+
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+
+const auth = firebase.auth();
+
+const db = firebase.firestore();
+
+
+const ADMIN_EMAIL =
+"sk6457520@gmail.com";
+
+
+
+/* LOGIN */
+
+document.getElementById("loginBtn").onclick=function(){
+
+  const email =
+  document.getElementById("email").value.trim();
+
+  const password =
+  document.getElementById("password").value;
+
+  const msg =
+  document.getElementById("loginMsg");
+
+
+  if(!email){
+
+    msg.innerHTML =
+    '<div class="message">Email bharen.</div>';
+
+    return;
+
+  }
+
+
+  if(!password){
+
+    msg.innerHTML =
+    '<div class="message">Password bharen.</div>';
+
+    return;
+
+  }
+
+
+  msg.innerHTML =
+  '<div class="message">⏳ Login ho raha hai...</div>';
+
+
+  auth.signInWithEmailAndPassword(
+    email,
+    password
+  )
+
+  .then(function(result){
+
+    if(
+      result.user.email.toLowerCase()
+      !==
+      ADMIN_EMAIL.toLowerCase()
+    ){
+
+      auth.signOut();
+
+      msg.innerHTML =
+      '<div class="message">❌ Sirf Admin account login kar sakta hai.</div>';
+
+      return;
+
+    }
+
+
+    msg.innerHTML =
+    '<div class="message">✅ Login successful.</div>';
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    msg.innerHTML =
+    '<div class="message">❌ Email ya Password galat hai.</div>';
+
+  });
+
+};
+
+
+
+/* FORGOT PASSWORD */
+
+document.getElementById("forgotBtn").onclick=function(){
+
+  const email =
+  document.getElementById("email").value.trim();
+
+  const msg =
+  document.getElementById("loginMsg");
+
+
+  if(!email){
+
+    msg.innerHTML =
+    '<div class="message">⚠️ Pehle Admin Email bharen.</div>';
+
+    return;
+
+  }
+
+
+  if(
+    email.toLowerCase()
+    !==
+    ADMIN_EMAIL.toLowerCase()
+  ){
+
+    msg.innerHTML =
+    '<div class="message">❌ Sirf Admin Email se password reset kar sakte hain.</div>';
+
+    return;
+
+  }
+
+
+  msg.innerHTML =
+  '<div class="message">⏳ Reset email bheja ja raha hai...</div>';
+
+
+  auth.sendPasswordResetEmail(email)
+
+  .then(function(){
+
+    msg.innerHTML =
+    '<div class="message">✅ Password reset email bhej diya gaya hai. Inbox aur Spam folder check karein.</div>';
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    msg.innerHTML =
+    '<div class="message">❌ Password reset email nahi bheja ja saka.</div>';
+
+  });
+
+};
+
+
+
+/* ENTER KEY */
+
+document.getElementById("password").onkeydown=function(e){
+
+  if(e.key==="Enter"){
+
+    document.getElementById("loginBtn").click();
+
+  }
+
+};
+
+
+
+/* AUTH */
+
+auth.onAuthStateChanged(function(user){
+
+  if(
+    user &&
+    user.email.toLowerCase()
+    ===
+    ADMIN_EMAIL.toLowerCase()
+  ){
+
+    document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+
+    document
+    .getElementById("adminPage")
+    .classList.remove("hidden");
+
+
+    loadSettings();
+
+    loadProducts();
+
+    loadOrders();
+
+  }
+
+  else{
+
+    document
+    .getElementById("loginPage")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("adminPage")
+    .classList.add("hidden");
+
+  }
+
+});
+
+
+
+/* LOGOUT */
+
+document.getElementById("logout").onclick=function(){
+
+  auth.signOut();
+
+};
+
+
+
+/* LOAD SETTINGS */
+
+function loadSettings(){
+
+  db.collection("settings")
+  .doc("store")
+  .get()
+
+  .then(function(snap){
+
+    if(snap.exists){
+
+      const data =
+      snap.data();
+
+
+      document.getElementById("storeName").value =
+      data.storeName || "";
+
+
+      document.getElementById("upiId").value =
+      data.upiId || "";
+
+
+      document.getElementById("logoUrl").value =
+      data.logoUrl || "";
+
+
+      document.getElementById("logoPreview").src =
+      data.logoUrl || "";
+
+    }
+
+  });
+
+}
+
+
+
+/* LOGO PREVIEW */
+
+document.getElementById("logoUrl").oninput=function(){
+
+  document.getElementById("logoPreview").src =
+  this.value;
+
+};
+
+
+
+/* SAVE SETTINGS */
+
+document.getElementById("saveSettings").onclick=function(){
+
+  const storeName =
+  document.getElementById("storeName").value.trim();
+
+  const upiId =
+  document.getElementById("upiId").value.trim();
+
+  const logoUrl =
+  document.getElementById("logoUrl").value.trim();
+
+
+  if(!storeName){
+
+    alert("Shop Name bharen.");
+
+    return;
+
+  }
+
+
+  db.collection("settings")
+  .doc("store")
+  .set({
+
+    storeName:storeName,
+
+    upiId:upiId,
+
+    logoUrl:logoUrl,
+
+    updatedAt:Date.now()
+
+  },{
+    merge:true
+  })
+
+  .then(function(){
+
+    document.getElementById("settingsMsg").innerHTML =
+    '<div class="message">✅ Settings save ho gayi.</div>';
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    document.getElementById("settingsMsg").innerHTML =
+    '<div class="message">❌ Settings save nahi hui.</div>';
+
+  });
+
+};
+
+
+
+/* SAVE PRODUCT */
+
+document.getElementById("saveProduct").onclick=function(){
+
+  const id =
+  document.getElementById("productId").value;
+
+  const name =
+  document.getElementById("productName").value.trim();
+
+  const price =
+  document.getElementById("productPrice").value;
+
+  const category =
+  document.getElementById("productCategory").value;
+
+  const image =
+  document.getElementById("productImage").value.trim();
+
+
+  if(!name){
+
+    alert("Product Name bharen.");
+
+    return;
+
+  }
+
+
+  if(!price){
+
+    alert("Price bharen.");
+
+    return;
+
+  }
+
+
+  if(!image){
+
+    alert("Product Image URL bharen.");
+
+    return;
+
+  }
+
+
+  const data = {
+
+    name:name,
+
+    price:Number(price),
+
+    category:category,
+
+    image:image,
+
+    updatedAt:Date.now()
+
+  };
+
+
+  let task;
+
+
+  if(id){
+
+    task =
+    db.collection("products")
+    .doc(id)
+    .update(data);
+
+  }
+
+  else{
+
+    data.createdAt =
+    Date.now();
+
+    task =
+    db.collection("products")
+    .add(data);
+
+  }
+
+
+  task.then(function(){
+
+    document.getElementById("productMsg").innerHTML =
+    '<div class="message">✅ Product save ho gaya.</div>';
+
+    clearProduct();
+
+    loadProducts();
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    alert("Product save nahi hua.");
+
+  });
+
+};
+
+
+
+/* LOAD PRODUCTS */
+
+function loadProducts(){
+
+  const box =
+  document.getElementById("products");
+
+  box.innerHTML =
+  "Loading...";
+
+
+  db.collection("products")
+  .get()
+
+  .then(function(snapshot){
+
+    if(snapshot.empty){
+
+      box.innerHTML =
+      '<div class="message">Abhi koi product nahi hai.</div>';
+
+      return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    snapshot.forEach(function(doc){
+
+      const p =
+      doc.data();
+
+
+      const div =
+      document.createElement("div");
+
+      div.className =
+      "product";
+
+
+      div.innerHTML =
+
+      '<img src="' +
+      (p.image || "") +
+      '">' +
+
+      '<h3>' +
+      (p.name || "") +
+      '</h3>' +
+
+      '<div class="price">₹' +
+      (p.price || 0) +
+      '</div>' +
+
+      '<p>Category: ' +
+      (p.category || "") +
+      '</p>' +
+
+      '<button class="blue" onclick="editProduct(\'' +
+      doc.id +
+      '\')">✏️ EDIT</button>' +
+
+      '<button class="red" onclick="deleteProduct(\'' +
+      doc.id +
+      '\')">🗑️ DELETE</button>';
+
+
+      box.appendChild(div);
+
+    });
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    box.innerHTML =
+    '<div class="message">❌ Products load nahi ho rahe.</div>';
+
+  });
+
+}
+
+
+
+/* EDIT PRODUCT */
+
+window.editProduct=function(id){
+
+  db.collection("products")
+  .doc(id)
+  .get()
+
+  .then(function(snap){
+
+    const p =
+    snap.data();
+
+
+    document.getElementById("productId").value =
+    id;
+
+
+    document.getElementById("productName").value =
+    p.name || "";
+
+
+    document.getElementById("productPrice").value =
+    p.price || "";
+
+
+    document.getElementById("productCategory").value =
+    p.category || "Men";
+
+
+    document.getElementById("productImage").value =
+    p.image || "";
+
+
+    document.getElementById("productHeading").innerText =
+    "✏️ Edit Product";
+
+
+    document.getElementById("saveProduct").innerText =
+    "UPDATE PRODUCT";
+
+
+    document.getElementById("cancelEdit")
+    .classList.remove("hidden");
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  });
+
+};
+
+
+
+/* CLEAR PRODUCT */
+
+function clearProduct(){
+
+  document.getElementById("productId").value =
+  "";
+
+  document.getElementById("productName").value =
+  "";
+
+  document.getElementById("productPrice").value =
+  "";
+
+  document.getElementById("productCategory").value =
+  "Men";
+
+  document.getElementById("productImage").value =
+  "";
+
+
+  document.getElementById("productHeading").innerText =
+  "➕ Add New Product";
+
+
+  document.getElementById("saveProduct").innerText =
+  "ADD PRODUCT";
+
+
+  document.getElementById("cancelEdit")
+  .classList.add("hidden");
+
+}
+
+
+document.getElementById("cancelEdit").onclick =
+clearProduct;
+
+
+
+/* DELETE PRODUCT */
+
+window.deleteProduct=function(id){
+
+  if(
+    !confirm(
+      "Kya aap product delete karna chahte hain?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  db.collection("products")
+  .doc(id)
+  .delete()
+
+  .then(function(){
+
+    loadProducts();
+
+  });
+
+};
+
+
+
+/* LOAD ORDERS */
+
+function loadOrders(){
+
+  const box =
+  document.getElementById("orders");
+
+  box.innerHTML =
+  "Loading...";
+
+
+  db.collection("orders")
+  .get()
+
+  .then(function(snapshot){
+
+    if(snapshot.empty){
+
+      box.innerHTML =
+      '<div class="message">Abhi koi order nahi hai.</div>';
+
+      return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    snapshot.forEach(function(doc){
+
+      const o =
+      doc.data();
+
+
+      const div =
+      document.createElement("div");
+
+      div.className =
+      "order";
+
+
+      div.innerHTML =
+
+      "<b>📦 Order ID:</b> " +
+      doc.id +
+
+      "<br><br>" +
+
+      "<b>Name:</b> " +
+      (o.name || o.customerName || "") +
+
+      "<br>" +
+
+      "<b>Mobile:</b> " +
+      (o.mobile || o.phone || "") +
+
+      "<br>" +
+
+      "<b>Address:</b> " +
+      (o.address || "") +
+
+      "<br>" +
+
+      "<b>PIN Code:</b> " +
+      (o.pincode || o.pinCode || "") +
+
+      "<br>" +
+
+      "<b>Total:</b> ₹" +
+      (o.total || "") +
+
+      "<br><br>" +
+
+      '<select onchange="changeStatus(\'' +
+      doc.id +
+      '\',this.value)">' +
+
+      "<option>Pending</option>" +
+      "<option>Confirmed</option>" +
+      "<option>Shipped</option>" +
+      "<option>Delivered</option>" +
+      "<option>Cancelled</option>" +
+
+      "</select>" +
+
+      '<button class="red" onclick="deleteOrder(\'' +
+      doc.id +
+      '\')">' +
+      "🗑️ DELETE ORDER" +
+      "</button>";
+
+
+      box.appendChild(div);
+
+    });
+
+  });
+
+}
+
+
+
+/* REFRESH ORDERS */
+
+document.getElementById("refreshOrders").onclick =
+loadOrders;
+
+
+
+/* STATUS */
+
+window.changeStatus=function(id,status){
+
+  db.collection("orders")
+  .doc(id)
+  .update({
+
+    status:status,
+
+    updatedAt:Date.now()
+
+  });
+
+};
+
+
+
+/* DELETE ORDER */
+
+window.deleteOrder=function(id){
+
+  if(
+    !confirm(
+      "Kya aap order delete karna chahte hain?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  db.collection("orders")
+  .doc(id)
+  .delete()
+
+  .then(function(){
+
+    loadOrders();
+
+  });
+
+};
+
+</script>
+
+</body>
+  </html>

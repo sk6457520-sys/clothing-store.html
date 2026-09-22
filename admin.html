@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Clothing Store India - Admin Panel</title>
+<title>Clothing Store India - Admin</title>
 
 <style>
 *{
@@ -14,15 +13,15 @@
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#f2f3f7;
+  background:#f1f3f6;
   color:#222;
 }
 
 header{
   background:#111;
-  color:white;
-  padding:18px 15px;
+  color:#fff;
   text-align:center;
+  padding:18px;
 }
 
 header h1{
@@ -32,7 +31,6 @@ header h1{
 
 header p{
   margin:6px 0 0;
-  color:#ddd;
 }
 
 .container{
@@ -42,102 +40,77 @@ header p{
 }
 
 .card{
-  background:white;
-  border-radius:12px;
+  background:#fff;
   padding:18px;
   margin-bottom:18px;
+  border-radius:14px;
   box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.login-card{
+  max-width:500px;
+  margin:70px auto;
 }
 
 h2{
   margin-top:0;
-  font-size:21px;
 }
 
-input,select,textarea{
+input,select{
   width:100%;
-  padding:13px;
-  margin:7px 0 12px;
+  padding:14px;
+  margin:7px 0 14px;
   border:1px solid #ccc;
-  border-radius:8px;
-  font-size:15px;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
+  border-radius:9px;
+  font-size:16px;
 }
 
 button{
   border:0;
-  border-radius:8px;
-  padding:12px 16px;
+  padding:13px 18px;
+  border-radius:9px;
   font-size:15px;
   font-weight:bold;
   cursor:pointer;
   margin:4px;
 }
 
-.primary{
+.login-btn{
+  width:100%;
   background:#111;
-  color:white;
+  color:#fff;
+  font-size:17px;
 }
 
 .green{
   background:#16803c;
-  color:white;
+  color:#fff;
 }
 
 .blue{
   background:#1266d6;
-  color:white;
+  color:#fff;
 }
 
 .red{
   background:#d71920;
-  color:white;
+  color:#fff;
 }
 
 .gray{
   background:#777;
-  color:white;
+  color:#fff;
 }
 
-.login-box{
-  max-width:420px;
-  margin:60px auto;
+.hidden{
+  display:none !important;
 }
 
-.product{
-  border:1px solid #ddd;
-  border-radius:10px;
+.message{
   padding:12px;
-  margin-bottom:12px;
-}
-
-.product img{
-  width:100%;
-  max-width:180px;
-  height:180px;
-  object-fit:contain;
-  display:block;
-  margin:auto;
+  margin-top:10px;
   border-radius:8px;
-  background:#f5f5f5;
-}
-
-.product h3{
-  margin-bottom:5px;
-}
-
-.price{
-  font-size:19px;
-  font-weight:bold;
-}
-
-.category{
-  color:#666;
-  font-size:14px;
+  background:#f0f0f0;
 }
 
 .logo-preview{
@@ -146,86 +119,83 @@ button{
   object-fit:contain;
   border:1px solid #ddd;
   border-radius:10px;
-  display:block;
   margin:10px 0;
-  background:#f7f7f7;
+  background:#f5f5f5;
+}
+
+.product{
+  border:1px solid #ddd;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:12px;
+}
+
+.product img{
+  width:180px;
+  height:180px;
+  object-fit:contain;
+  display:block;
+  margin:auto;
+  background:#f5f5f5;
+  border-radius:8px;
+}
+
+.price{
+  font-size:19px;
+  font-weight:bold;
+  margin:6px 0;
 }
 
 .order{
   border:1px solid #ddd;
-  border-radius:10px;
   padding:14px;
+  border-radius:10px;
   margin-bottom:12px;
-}
-
-.order-title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:8px;
-}
-
-.order-info{
-  line-height:1.6;
-  font-size:14px;
   word-break:break-word;
 }
 
-.status{
+.order-id{
   font-weight:bold;
-  padding:8px;
-  border-radius:7px;
-  margin:8px 0;
-}
-
-.hidden{
-  display:none;
-}
-
-.message{
-  padding:10px;
-  border-radius:8px;
-  margin:10px 0;
-  background:#eee;
+  font-size:17px;
+  margin-bottom:8px;
 }
 
 .small{
-  font-size:13px;
   color:#666;
-}
-
-hr{
-  border:0;
-  border-top:1px solid #ddd;
-  margin:20px 0;
+  font-size:13px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+
+<!-- ================= LOGIN ================= -->
+
 <div id="loginPage">
 
-  <div class="login-box card">
+  <div class="card login-card">
 
     <h2>🔐 Admin Login</h2>
 
     <input
+      id="email"
       type="email"
-      id="loginEmail"
       placeholder="Admin Email"
+      autocomplete="email"
     >
 
     <input
+      id="password"
       type="password"
-      id="loginPassword"
       placeholder="Password"
+      autocomplete="current-password"
     >
 
     <button
-      class="primary"
-      style="width:100%;"
-      onclick="loginAdmin()"
+      id="loginButton"
+      class="login-btn"
+      type="button"
     >
       LOGIN
     </button>
@@ -237,15 +207,13 @@ hr{
 </div>
 
 
-<!-- ADMIN PANEL -->
+<!-- ================= ADMIN PANEL ================= -->
+
 <div id="adminPage" class="hidden">
 
 <header>
-
   <h1>Clothing Store India</h1>
-
   <p>Admin Panel</p>
-
 </header>
 
 
@@ -253,160 +221,168 @@ hr{
 
 
 <!-- STORE SETTINGS -->
+
 <div class="card">
 
-  <h2>🏪 Store Settings</h2>
+<h2>🏪 Store Settings</h2>
 
-  <label>Shop Name</label>
+<label>Shop Name</label>
 
-  <input
-    type="text"
-    id="storeName"
-    placeholder="Shop Name"
-  >
+<input
+  id="storeName"
+  type="text"
+  placeholder="Shop Name"
+>
 
-  <label>UPI ID</label>
+<label>UPI ID</label>
 
-  <input
-    type="text"
-    id="upiId"
-    placeholder="UPI ID"
-  >
+<input
+  id="upiId"
+  type="text"
+  placeholder="UPI ID"
+>
 
-  <label>Logo Image URL</label>
+<label>Logo Image URL</label>
 
-  <input
-    type="url"
-    id="logoUrl"
-    placeholder="Logo Image URL"
-    oninput="previewLogo()"
-  >
+<input
+  id="logoUrl"
+  type="url"
+  placeholder="Logo Image URL"
+>
 
-  <img
-    id="logoPreview"
-    class="logo-preview"
-    src=""
-    alt="Logo Preview"
-  >
+<img
+  id="logoPreview"
+  class="logo-preview"
+  src=""
+  alt="Logo"
+>
 
-  <button
-    class="green"
-    onclick="saveSettings()"
-  >
-    SAVE STORE SETTINGS
-  </button>
+<br>
 
-  <div id="settingsMessage"></div>
+<button
+  id="saveSettingsButton"
+  class="green"
+  type="button"
+>
+SAVE STORE SETTINGS
+</button>
+
+<div id="settingsMessage"></div>
 
 </div>
 
 
-<!-- ADD / EDIT PRODUCT -->
+<!-- PRODUCT FORM -->
+
 <div class="card">
 
-  <h2 id="productFormTitle">➕ Add New Product</h2>
+<h2 id="productTitle">➕ Add New Product</h2>
 
-  <input
-    type="hidden"
-    id="productId"
-  >
+<input
+  id="productId"
+  type="hidden"
+>
 
-  <label>Product Name</label>
+<label>Product Name</label>
 
-  <input
-    type="text"
-    id="productName"
-    placeholder="Example: Men's Shirt"
-  >
+<input
+  id="productName"
+  type="text"
+  placeholder="Product Name"
+>
 
-  <label>Price</label>
+<label>Price</label>
 
-  <input
-    type="number"
-    id="productPrice"
-    placeholder="Example: 999"
-  >
+<input
+  id="productPrice"
+  type="number"
+  placeholder="Product Price"
+>
 
-  <label>Category</label>
+<label>Category</label>
 
-  <select id="productCategory">
+<select id="productCategory">
 
-    <option value="Men">Men</option>
+<option value="Men">Men</option>
+<option value="Women">Women</option>
 
-    <option value="Women">Women</option>
+</select>
 
-  </select>
+<label>Product Image URL</label>
 
-  <label>Product Image URL</label>
+<input
+  id="productImage"
+  type="url"
+  placeholder="Product Image URL"
+>
 
-  <input
-    type="url"
-    id="productImage"
-    placeholder="Paste product image URL"
-  >
+<button
+  id="saveProductButton"
+  class="green"
+  type="button"
+>
+ADD PRODUCT
+</button>
 
-  <button
-    class="primary"
-    onclick="saveProduct()"
-    id="productSaveButton"
-  >
-    ADD PRODUCT
-  </button>
+<button
+  id="cancelEditButton"
+  class="gray hidden"
+  type="button"
+>
+CANCEL
+</button>
 
-  <button
-    class="gray hidden"
-    onclick="cancelEdit()"
-    id="cancelEditButton"
-  >
-    CANCEL EDIT
-  </button>
-
-  <div id="productMessage"></div>
+<div id="productMessage"></div>
 
 </div>
 
 
 <!-- PRODUCTS -->
+
 <div class="card">
 
-  <h2>👕 Your Products</h2>
+<h2>👕 Your Products</h2>
 
-  <div id="productsList">
-    Loading products...
-  </div>
+<div id="productsList">
+Loading...
+</div>
 
 </div>
 
 
 <!-- ORDERS -->
+
 <div class="card">
 
-  <h2>📦 Customer Orders</h2>
+<h2>📦 Customer Orders</h2>
 
-  <button
-    class="blue"
-    onclick="loadOrders()"
-  >
-    🔄 REFRESH ORDERS
-  </button>
+<button
+  id="refreshOrdersButton"
+  class="blue"
+  type="button"
+>
+🔄 REFRESH ORDERS
+</button>
 
-  <div id="ordersList">
-    Loading orders...
-  </div>
+<div id="ordersList">
+Loading...
+</div>
 
 </div>
 
 
 <!-- LOGOUT -->
+
 <div class="card">
 
-  <button
-    class="red"
-    style="width:100%;"
-    onclick="logoutAdmin()"
-  >
-    🚪 LOGOUT
-  </button>
+<button
+  id="logoutButton"
+  class="red"
+  type="button"
+  style="width:100%;"
+>
+🚪 LOGOUT
+</button>
 
 </div>
 
@@ -414,6 +390,8 @@ hr{
 </div>
 </div>
 
+
+<!-- ================= FIREBASE ================= -->
 
 <script type="module">
 
@@ -441,19 +419,27 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
+/* ================= FIREBASE CONFIG ================= */
+
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDjG5fKH7apknSPMUCBs3pVa91Hj5vMnB4",
+  apiKey:
+  "AIzaSyDjG5fKH7apknSPMUCBs3pVa91Hj5vMnB4",
 
-  authDomain: "clothing-store-india.firebaseapp.com",
+  authDomain:
+  "clothing-store-india.firebaseapp.com",
 
-  projectId: "clothing-store-india",
+  projectId:
+  "clothing-store-india",
 
-  storageBucket: "clothing-store-india.firebasestorage.app",
+  storageBucket:
+  "clothing-store-india.firebasestorage.app",
 
-  messagingSenderId: "1032694314798",
+  messagingSenderId:
+  "1032694314798",
 
-  appId: "1:1032694314798:web:00484f9e6fc47394ddacbf"
+  appId:
+  "1:1032694314798:web:00484f9e6fc47394ddacbf"
 
 };
 
@@ -465,29 +451,59 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 
-const ADMIN_EMAIL = "sk6457520@gmail.com";
+const ADMIN_EMAIL =
+"sk6457520@gmail.com";
 
 
-/* =========================
-   LOGIN
-========================= */
+/* ================= ELEMENTS ================= */
 
-window.loginAdmin = async function(){
+const loginPage =
+document.getElementById("loginPage");
+
+const adminPage =
+document.getElementById("adminPage");
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+const loginButton =
+document.getElementById("loginButton");
+
+const loginMessage =
+document.getElementById("loginMessage");
+
+
+/* ================= LOGIN ================= */
+
+loginButton.addEventListener("click", async function(){
 
   const email =
-    document.getElementById("loginEmail").value.trim();
+  emailInput.value.trim();
 
   const password =
-    document.getElementById("loginPassword").value;
-
-  const message =
-    document.getElementById("loginMessage");
+  passwordInput.value;
 
 
-  if(!email || !password){
+  loginMessage.innerHTML =
+  '<div class="message">Login ho raha hai...</div>';
 
-    message.innerHTML =
-      '<div class="message">Email aur password bharen.</div>';
+
+  if(!email){
+
+    loginMessage.innerHTML =
+    '<div class="message">Email bharen.</div>';
+
+    return;
+  }
+
+
+  if(!password){
+
+    loginMessage.innerHTML =
+    '<div class="message">Password bharen.</div>';
 
     return;
   }
@@ -495,37 +511,63 @@ window.loginAdmin = async function(){
 
   try{
 
+    const result =
     await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
 
+
+    if(result.user.email !== ADMIN_EMAIL){
+
+      await signOut(auth);
+
+      loginMessage.innerHTML =
+      '<div class="message">Sirf Admin account se login kar sakte hain.</div>';
+
+      return;
+    }
+
+
+    loginMessage.innerHTML =
+    '<div class="message">✅ Login successful...</div>';
+
+
   }catch(error){
 
-    message.innerHTML =
-      '<div class="message">Login failed. Email ya password check karein.</div>';
+    console.error(error);
+
+    loginMessage.innerHTML =
+    '<div class="message">❌ Login failed. Email/password check karein.</div>';
 
   }
 
-};
+});
 
 
-/* =========================
-   AUTH CHECK
-========================= */
+/* ================= ENTER KEY LOGIN ================= */
 
-onAuthStateChanged(auth, async(user)=>{
+passwordInput.addEventListener("keydown", function(event){
+
+  if(event.key === "Enter"){
+
+    loginButton.click();
+
+  }
+
+});
+
+
+/* ================= AUTH STATE ================= */
+
+onAuthStateChanged(auth, async function(user){
 
   if(user && user.email === ADMIN_EMAIL){
 
-    document
-      .getElementById("loginPage")
-      .classList.add("hidden");
+    loginPage.classList.add("hidden");
 
-    document
-      .getElementById("adminPage")
-      .classList.remove("hidden");
+    adminPage.classList.remove("hidden");
 
 
     await loadSettings();
@@ -538,97 +580,116 @@ onAuthStateChanged(auth, async(user)=>{
 
   else{
 
-    document
-      .getElementById("loginPage")
-      .classList.remove("hidden");
+    loginPage.classList.remove("hidden");
 
-    document
-      .getElementById("adminPage")
-      .classList.add("hidden");
+    adminPage.classList.add("hidden");
 
   }
 
 });
 
 
-/* =========================
-   LOGOUT
-========================= */
+/* ================= LOGOUT ================= */
 
-window.logoutAdmin = async function(){
+document
+.getElementById("logoutButton")
+.addEventListener("click", async function(){
 
   await signOut(auth);
 
-};
+});
 
 
-/* =========================
-   STORE SETTINGS
-========================= */
+/* ================= SETTINGS LOAD ================= */
 
 async function loadSettings(){
 
   try{
 
     const ref =
-      doc(db,"settings","store");
+    doc(db,"settings","store");
 
     const snap =
-      await getDoc(ref);
+    await getDoc(ref);
 
 
     if(snap.exists()){
 
-      const data = snap.data();
+      const data =
+      snap.data();
 
 
-      document.getElementById("storeName").value =
-        data.storeName || "";
+      document
+      .getElementById("storeName")
+      .value =
+      data.storeName || "";
 
 
-      document.getElementById("upiId").value =
-        data.upiId || "";
+      document
+      .getElementById("upiId")
+      .value =
+      data.upiId || "";
 
 
-      document.getElementById("logoUrl").value =
-        data.logoUrl || "";
+      document
+      .getElementById("logoUrl")
+      .value =
+      data.logoUrl || "";
 
 
-      document.getElementById("logoPreview").src =
-        data.logoUrl || "";
+      document
+      .getElementById("logoPreview")
+      .src =
+      data.logoUrl || "";
 
     }
 
   }catch(error){
 
-    console.log(error);
+    console.error(error);
 
   }
 
 }
 
 
-window.previewLogo = function(){
+/* ================= LOGO PREVIEW ================= */
 
-  const url =
-    document.getElementById("logoUrl").value.trim();
+document
+.getElementById("logoUrl")
+.addEventListener("input", function(){
 
-  document.getElementById("logoPreview").src =
-    url;
+  document
+  .getElementById("logoPreview")
+  .src =
+  this.value.trim();
 
-};
+});
 
 
-window.saveSettings = async function(){
+/* ================= SAVE SETTINGS ================= */
+
+document
+.getElementById("saveSettingsButton")
+.addEventListener("click", async function(){
 
   const storeName =
-    document.getElementById("storeName").value.trim();
+  document
+  .getElementById("storeName")
+  .value
+  .trim();
 
   const upiId =
-    document.getElementById("upiId").value.trim();
+  document
+  .getElementById("upiId")
+  .value
+  .trim();
 
   const logoUrl =
-    document.getElementById("logoUrl").value.trim();
+  document
+  .getElementById("logoUrl")
+  .value
+  .trim();
 
 
   if(!storeName){
@@ -636,7 +697,6 @@ window.saveSettings = async function(){
     alert("Shop Name bharen.");
 
     return;
-
   }
 
 
@@ -663,42 +723,60 @@ window.saveSettings = async function(){
     );
 
 
-    document.getElementById("settingsMessage").innerHTML =
-      '<div class="message">✅ Store settings save ho gayi.</div>';
+    document
+    .getElementById("settingsMessage")
+    .innerHTML =
+    '<div class="message">✅ Settings save ho gayi.</div>';
 
 
   }catch(error){
 
     console.error(error);
 
-    document.getElementById("settingsMessage").innerHTML =
-      '<div class="message">❌ Settings save nahi hui.</div>';
+    document
+    .getElementById("settingsMessage")
+    .innerHTML =
+    '<div class="message">❌ Settings save nahi hui.</div>';
 
   }
 
-};
+});
 
 
-/* =========================
-   SAVE PRODUCT
-========================= */
+/* ================= SAVE PRODUCT ================= */
 
-window.saveProduct = async function(){
+document
+.getElementById("saveProductButton")
+.addEventListener("click", async function(){
 
   const productId =
-    document.getElementById("productId").value.trim();
+  document
+  .getElementById("productId")
+  .value
+  .trim();
 
   const name =
-    document.getElementById("productName").value.trim();
+  document
+  .getElementById("productName")
+  .value
+  .trim();
 
   const price =
-    document.getElementById("productPrice").value.trim();
+  document
+  .getElementById("productPrice")
+  .value
+  .trim();
 
   const category =
-    document.getElementById("productCategory").value;
+  document
+  .getElementById("productCategory")
+  .value;
 
   const image =
-    document.getElementById("productImage").value.trim();
+  document
+  .getElementById("productImage")
+  .value
+  .trim();
 
 
   if(!name){
@@ -706,7 +784,6 @@ window.saveProduct = async function(){
     alert("Product Name bharen.");
 
     return;
-
   }
 
 
@@ -715,7 +792,6 @@ window.saveProduct = async function(){
     alert("Product Price bharen.");
 
     return;
-
   }
 
 
@@ -724,7 +800,6 @@ window.saveProduct = async function(){
     alert("Product Image URL bharen.");
 
     return;
-
   }
 
 
@@ -753,8 +828,10 @@ window.saveProduct = async function(){
       );
 
 
-      document.getElementById("productMessage").innerHTML =
-        '<div class="message">✅ Product update ho gaya.</div>';
+      document
+      .getElementById("productMessage")
+      .innerHTML =
+      '<div class="message">✅ Product update ho gaya.</div>';
 
     }
 
@@ -783,8 +860,10 @@ window.saveProduct = async function(){
       );
 
 
-      document.getElementById("productMessage").innerHTML =
-        '<div class="message">✅ Product add ho gaya.</div>';
+      document
+      .getElementById("productMessage")
+      .innerHTML =
+      '<div class="message">✅ Product add ho gaya.</div>';
 
     }
 
@@ -798,50 +877,45 @@ window.saveProduct = async function(){
 
     console.error(error);
 
-    document.getElementById("productMessage").innerHTML =
-      '<div class="message">❌ Product save nahi hua.</div>';
+    alert("Product save nahi hua.");
 
   }
 
-};
+});
 
 
-/* =========================
-   LOAD PRODUCTS
-========================= */
+/* ================= LOAD PRODUCTS ================= */
 
 async function loadProducts(){
 
   const list =
-    document.getElementById("productsList");
+  document.getElementById("productsList");
 
   list.innerHTML =
-    "Loading products...";
+  "Loading products...";
 
 
   try{
 
     const snapshot =
-      await getDocs(collection(db,"products"));
+    await getDocs(
+      collection(db,"products")
+    );
 
 
     if(snapshot.empty){
 
       list.innerHTML =
-        '<div class="message">Abhi koi product nahi hai.</div>';
+      '<div class="message">Abhi koi product nahi hai.</div>';
 
       return;
-
     }
 
 
-    list.innerHTML = "";
+    const products=[];
 
 
-    const products = [];
-
-
-    snapshot.forEach((item)=>{
+    snapshot.forEach(function(item){
 
       products.push({
 
@@ -854,98 +928,101 @@ async function loadProducts(){
     });
 
 
-    products.sort((a,b)=>
-      (b.createdAt || 0) -
-      (a.createdAt || 0)
-    );
+    products.sort(function(a,b){
+
+      return (b.createdAt || 0) -
+             (a.createdAt || 0);
+
+    });
 
 
-    products.forEach(product=>{
+    list.innerHTML="";
+
+
+    products.forEach(function(product){
 
       const div =
-        document.createElement("div");
+      document.createElement("div");
 
-      div.className = "product";
+      div.className="product";
 
 
       const img =
-        document.createElement("img");
+      document.createElement("img");
 
       img.src =
-        product.image || "";
-
-      img.onerror = function(){
-
-        this.style.display = "none";
-
-      };
+      product.image || "";
 
 
-      const title =
-        document.createElement("h3");
+      const name =
+      document.createElement("h3");
 
-      title.textContent =
-        product.name || "No Name";
+      name.textContent =
+      product.name || "";
 
 
       const price =
-        document.createElement("div");
+      document.createElement("div");
 
-      price.className = "price";
+      price.className="price";
 
       price.textContent =
-        "₹" + (product.price || 0);
+      "₹" + (product.price || 0);
 
 
       const category =
-        document.createElement("div");
-
-      category.className = "category";
+      document.createElement("div");
 
       category.textContent =
-        "Category: " +
-        (product.category || "");
+      "Category: " +
+      (product.category || "");
 
 
-      const editButton =
-        document.createElement("button");
+      const edit =
+      document.createElement("button");
 
-      editButton.className = "blue";
+      edit.className="blue";
 
-      editButton.textContent = "✏️ EDIT";
+      edit.textContent="✏️ EDIT";
 
-      editButton.onclick = function(){
+
+      edit.addEventListener(
+      "click",
+      function(){
 
         editProduct(product);
 
-      };
+      });
 
 
-      const deleteButton =
-        document.createElement("button");
+      const del =
+      document.createElement("button");
 
-      deleteButton.className = "red";
+      del.className="red";
 
-      deleteButton.textContent = "🗑️ DELETE";
+      del.textContent="🗑️ DELETE";
 
-      deleteButton.onclick = function(){
+
+      del.addEventListener(
+      "click",
+      function(){
 
         deleteProduct(product.id);
 
-      };
+      });
 
 
       div.appendChild(img);
 
-      div.appendChild(title);
+      div.appendChild(name);
 
       div.appendChild(price);
 
       div.appendChild(category);
 
-      div.appendChild(editButton);
+      div.appendChild(edit);
 
-      div.appendChild(deleteButton);
+      div.appendChild(del);
 
       list.appendChild(div);
 
@@ -957,46 +1034,63 @@ async function loadProducts(){
     console.error(error);
 
     list.innerHTML =
-      '<div class="message">Products load nahi ho rahe.</div>';
+    '<div class="message">Products load nahi ho rahe.</div>';
 
   }
 
 }
 
 
-/* =========================
-   EDIT PRODUCT
-========================= */
+/* ================= EDIT PRODUCT ================= */
 
 function editProduct(product){
 
-  document.getElementById("productId").value =
-    product.id;
-
-  document.getElementById("productName").value =
-    product.name || "";
-
-  document.getElementById("productPrice").value =
-    product.price || "";
-
-  document.getElementById("productCategory").value =
-    product.category || "Men";
-
-  document.getElementById("productImage").value =
-    product.image || "";
-
-
-  document.getElementById("productFormTitle").textContent =
-    "✏️ Edit Product";
-
-
-  document.getElementById("productSaveButton").textContent =
-    "UPDATE PRODUCT";
+  document
+  .getElementById("productId")
+  .value =
+  product.id;
 
 
   document
-    .getElementById("cancelEditButton")
-    .classList.remove("hidden");
+  .getElementById("productName")
+  .value =
+  product.name || "";
+
+
+  document
+  .getElementById("productPrice")
+  .value =
+  product.price || "";
+
+
+  document
+  .getElementById("productCategory")
+  .value =
+  product.category || "Men";
+
+
+  document
+  .getElementById("productImage")
+  .value =
+  product.image || "";
+
+
+  document
+  .getElementById("productTitle")
+  .textContent =
+  "✏️ Edit Product";
+
+
+  document
+  .getElementById("saveProductButton")
+  .textContent =
+  "UPDATE PRODUCT";
+
+
+  document
+  .getElementById("cancelEditButton")
+  .classList
+  .remove("hidden");
 
 
   window.scrollTo({
@@ -1010,426 +1104,18 @@ function editProduct(product){
 }
 
 
-window.cancelEdit = function(){
+/* ================= CANCEL EDIT ================= */
+
+document
+.getElementById("cancelEditButton")
+.addEventListener("click", function(){
 
   clearProductForm();
 
-};
+});
 
 
 function clearProductForm(){
 
-  document.getElementById("productId").value = "";
-
-  document.getElementById("productName").value = "";
-
-  document.getElementById("productPrice").value = "";
-
-  document.getElementById("productCategory").value = "Men";
-
-  document.getElementById("productImage").value = "";
-
-
-  document.getElementById("productFormTitle").textContent =
-    "➕ Add New Product";
-
-
-  document.getElementById("productSaveButton").textContent =
-    "ADD PRODUCT";
-
-
   document
-    .getElementById("cancelEditButton")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================
-   DELETE PRODUCT
-========================= */
-
-window.deleteProduct = async function(id){
-
-  const yes =
-    confirm(
-      "Kya aap is product ko delete karna chahte hain?"
-    );
-
-
-  if(!yes){
-
-    return;
-
-  }
-
-
-  try{
-
-    await deleteDoc(
-      doc(db,"products",id)
-    );
-
-
-    await loadProducts();
-
-
-  }catch(error){
-
-    console.error(error);
-
-    alert("Product delete nahi hua.");
-
-  }
-
-};
-
-
-/* =========================
-   ORDERS
-========================= */
-
-window.loadOrders = async function(){
-
-  const list =
-    document.getElementById("ordersList");
-
-  list.innerHTML =
-    "Loading orders...";
-
-
-  try{
-
-    const snapshot =
-      await getDocs(collection(db,"orders"));
-
-
-    if(snapshot.empty){
-
-      list.innerHTML =
-        '<div class="message">Abhi koi customer order nahi hai.</div>';
-
-      return;
-
-    }
-
-
-    const orders = [];
-
-
-    snapshot.forEach(item=>{
-
-      orders.push({
-
-        id:item.id,
-
-        ...item.data()
-
-      });
-
-    });
-
-
-    orders.sort((a,b)=>
-      (b.createdAt || 0) -
-      (a.createdAt || 0)
-    );
-
-
-    list.innerHTML = "";
-
-
-    orders.forEach(order=>{
-
-      const div =
-        document.createElement("div");
-
-      div.className = "order";
-
-
-      const title =
-        document.createElement("div");
-
-      title.className = "order-title";
-
-      title.textContent =
-        "📦 Order ID: " +
-        order.id;
-
-
-      const info =
-        document.createElement("div");
-
-      info.className = "order-info";
-
-
-      let html = "";
-
-
-      if(order.name || order.customerName){
-
-        html +=
-          "<b>Name:</b> " +
-          escapeHtml(
-            order.name ||
-            order.customerName
-          ) +
-          "<br>";
-
-      }
-
-
-      if(order.mobile || order.phone){
-
-        html +=
-          "<b>Mobile:</b> " +
-          escapeHtml(
-            order.mobile ||
-            order.phone
-          ) +
-          "<br>";
-
-      }
-
-
-      if(order.address){
-
-        html +=
-          "<b>Address:</b> " +
-          escapeHtml(
-            order.address
-          ) +
-          "<br>";
-
-      }
-
-
-      if(order.pincode || order.pinCode){
-
-        html +=
-          "<b>PIN Code:</b> " +
-          escapeHtml(
-            order.pincode ||
-            order.pinCode
-          ) +
-          "<br>";
-
-      }
-
-
-      if(order.total){
-
-        html +=
-          "<b>Total:</b> ₹" +
-          escapeHtml(
-            String(order.total)
-          ) +
-          "<br>";
-
-      }
-
-
-      if(order.items){
-
-        let itemText = "";
-
-        try{
-
-          itemText =
-            typeof order.items === "string"
-            ? order.items
-            : JSON.stringify(order.items);
-
-        }catch(e){
-
-          itemText =
-            String(order.items);
-
-        }
-
-
-        html +=
-          "<b>Items:</b> " +
-          escapeHtml(itemText) +
-          "<br>";
-
-      }
-
-
-      if(order.createdAt){
-
-        html +=
-          "<b>Order Time:</b> " +
-          new Date(
-            order.createdAt
-          ).toLocaleString("en-IN") +
-          "<br>";
-
-      }
-
-
-      info.innerHTML = html;
-
-
-      const statusLabel =
-        document.createElement("div");
-
-      statusLabel.innerHTML =
-        "<b>Order Status:</b>";
-
-
-      const statusSelect =
-        document.createElement("select");
-
-
-      const statuses = [
-
-        "Pending",
-
-        "Confirmed",
-
-        "Shipped",
-
-        "Delivered",
-
-        "Cancelled"
-
-      ];
-
-
-      statuses.forEach(status=>{
-
-        const option =
-          document.createElement("option");
-
-        option.value =
-          status;
-
-        option.textContent =
-          status;
-
-        statusSelect.appendChild(option);
-
-      });
-
-
-      statusSelect.value =
-        order.status || "Pending";
-
-
-      statusSelect.onchange =
-        function(){
-
-          updateOrderStatus(
-            order.id,
-            this.value
-          );
-
-        };
-
-
-      const deleteButton =
-        document.createElement("button");
-
-      deleteButton.className = "red";
-
-      deleteButton.textContent =
-        "🗑️ DELETE ORDER";
-
-      deleteButton.onclick =
-        function(){
-
-          deleteOrder(order.id);
-
-        };
-
-
-      div.appendChild(title);
-
-      div.appendChild(info);
-
-      div.appendChild(statusLabel);
-
-      div.appendChild(statusSelect);
-
-      div.appendChild(
-        document.createElement("br")
-      );
-
-      div.appendChild(deleteButton);
-
-      list.appendChild(div);
-
-    });
-
-
-  }catch(error){
-
-    console.error(error);
-
-    list.innerHTML =
-      '<div class="message">Orders load nahi ho rahe.</div>';
-
-  }
-
-};
-
-
-/* =========================
-   UPDATE ORDER STATUS
-========================= */
-
-async function updateOrderStatus(id,status){
-
-  try{
-
-    await updateDoc(
-
-      doc(db,"orders",id),
-
-      {
-
-        status:status,
-
-        updatedAt:Date.now()
-
-      }
-
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "Order status update nahi hua."
-    );
-
-  }
-
-}
-
-
-/* =========================
-   DELETE ORDER
-========================= */
-
-async function deleteOrder(id){
-
-  const yes =
-    confirm(
-      "Kya aap is order ko delete karna chahte hain?"
-    );
-
-
-  if(!yes){
-
-    return;
-
-  }
-
-
-  try{
-
-    await deleteDoc(
-      doc(db,"o
+  

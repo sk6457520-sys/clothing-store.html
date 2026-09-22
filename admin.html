@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Clothing Store India - Admin</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -22,6 +24,15 @@ header{
   color:white;
   padding:18px;
   text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:25px;
+}
+
+header p{
+  margin:6px 0 0;
 }
 
 .container{
@@ -42,7 +53,8 @@ h2{
   margin-top:0;
 }
 
-input,select{
+input,
+select{
   width:100%;
   padding:13px;
   margin:8px 0 14px;
@@ -63,12 +75,23 @@ button{
   margin-top:5px;
 }
 
-button.delete{
+.delete{
   background:#d32f2f;
 }
 
-button.logout{
+.logout{
   background:#555;
+}
+
+.hidden{
+  display:none;
+}
+
+.message{
+  padding:10px;
+  border-radius:8px;
+  margin-top:12px;
+  background:#eee;
 }
 
 .product{
@@ -85,449 +108,626 @@ button.logout{
   border-radius:10px;
 }
 
+.product h3{
+  margin-bottom:5px;
+}
+
 .price{
   font-size:20px;
   font-weight:bold;
   margin:8px 0;
 }
 
-.hidden{
-  display:none;
-}
-
-.message{
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:12px;
-  background:#eee;
-}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Clothing Store India</h1>
-  <p>Admin Panel</p>
+
+<h1>Clothing Store India</h1>
+
+<p>Admin Panel</p>
+
 </header>
+
 
 <div class="container">
 
-<!-- LOGIN -->
+
+<!-- ADMIN LOGIN -->
+
 <div id="loginBox" class="card">
-  <h2>Admin Login</h2>
 
-  <input
-    type="email"
-    id="email"
-    placeholder="Admin Email"
-  >
+<h2>Admin Login</h2>
 
-  <input
-    type="password"
-    id="password"
-    placeholder="Password"
-  >
+<input
+type="email"
+id="email"
+placeholder="Admin Email"
+>
 
-  <button onclick="login()">LOGIN</button>
+<input
+type="password"
+id="password"
+placeholder="Password"
+>
 
-  <div id="loginMessage" class="message"></div>
+<button onclick="login()">
+LOGIN
+</button>
+
+<div
+id="loginMessage"
+class="message">
 </div>
+
+</div>
+
 
 
 <!-- ADMIN PANEL -->
+
 <div id="adminPanel" class="hidden">
 
-  <div class="card">
 
-    <h2>Add New Product</h2>
+<!-- ADD PRODUCT -->
 
-    <input
-      type="text"
-      id="productName"
-      placeholder="Product Name"
-    >
+<div class="card">
 
-    <input
-      type="number"
-      id="productPrice"
-      placeholder="Price ₹"
-    >
+<h2>Add New Product</h2>
 
-    <select id="productCategory">
-      <option value="Men">Men</option>
-      <option value="Women">Women</option>
-    </select>
+<input
+type="text"
+id="productName"
+placeholder="Product Name"
+>
 
-    <input
-      type="text"
-      id="productImage"
-      placeholder="Product Image URL"
-    >
+<input
+type="number"
+id="productPrice"
+placeholder="Price ₹"
+>
 
-    <button onclick="addProduct()">
-      ADD PRODUCT
-    </button>
+<select id="productCategory">
 
-    <div id="addMessage" class="message"></div>
+<option value="Men">
+Men
+</option>
 
-  </div>
+<option value="Women">
+Women
+</option>
+
+</select>
+
+<input
+type="text"
+id="productImage"
+placeholder="Product Image URL"
+>
+
+<button onclick="addProduct()">
+ADD PRODUCT
+</button>
+
+<div
+id="addMessage"
+class="message">
+</div>
+
+</div>
 
 
-  <div class="card">
 
-    <h2>Products</h2>
+<!-- PRODUCTS -->
 
-    <div id="productsList">
-      Loading...
-    </div>
+<div class="card">
 
-  </div>
+<h2>Your Products</h2>
+
+<div id="productsList">
+Loading...
+</div>
+
+</div>
 
 
-  <div class="card">
-    <button class="logout" onclick="logout()">
-      LOGOUT
-    </button>
-  </div>
+
+<!-- LOGOUT -->
+
+<div class="card">
+
+<button
+class="logout"
+onclick="logout()">
+LOGOUT
+</button>
 
 </div>
 
 </div>
+
+</div>
+
 
 
 <script type="module">
 
-/* =========================================
+
+/* =====================================
    FIREBASE IMPORT
-========================================= */
+===================================== */
 
 import { initializeApp }
+
 from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-}
-from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
 }
+
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+}
+
 from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
-/* =========================================
-   FIREBASE CONFIG
-========================================= */
+
+/* =====================================
+   YOUR FIREBASE CONFIG
+===================================== */
 
 const firebaseConfig = {
 
-  apiKey: "PASTE_YOUR_API_KEY",
+apiKey:
+"AIzaSyDjG5fKH7apknSPMUCBs3pVa91Hj5vMnB4",
 
-  authDomain:
-    "clothing-store-india.firebaseapp.com",
+authDomain:
+"clothing-store-india.firebaseapp.com",
 
-  projectId:
-    "clothing-store-india",
+projectId:
+"clothing-store-india",
 
-  storageBucket:
-    "PASTE_YOUR_STORAGE_BUCKET",
+storageBucket:
+"clothing-store-india.firebasestorage.app",
 
-  messagingSenderId:
-    "PASTE_YOUR_MESSAGING_SENDER_ID",
+messagingSenderId:
+"1032694314798",
 
-  appId:
-    "PASTE_YOUR_APP_ID"
+appId:
+"1:1032694314798:web:00484f9e6fc47394ddacbf"
 
 };
 
 
-/* =========================================
-   FIREBASE START
-========================================= */
 
-const app = initializeApp(firebaseConfig);
+/* =====================================
+   START FIREBASE
+===================================== */
 
-const auth = getAuth(app);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
 
 
-/* =========================================
-   LOGIN
-========================================= */
+
+/* =====================================
+   ADMIN LOGIN
+===================================== */
 
 window.login = async function(){
 
-  const email =
-    document.getElementById("email").value.trim();
+const email =
+document
+.getElementById("email")
+.value
+.trim();
 
-  const password =
-    document.getElementById("password").value;
+const password =
+document
+.getElementById("password")
+.value;
 
-  const message =
-    document.getElementById("loginMessage");
+const message =
+document
+.getElementById("loginMessage");
 
-  if(!email || !password){
 
-    message.innerText =
-      "Email aur password dono bharen.";
+if(!email || !password){
 
-    return;
-  }
+message.innerText =
+"Email aur password dono bharen.";
 
-  try{
+return;
 
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+}
 
-    message.innerText =
-      "Login successful.";
 
-  }catch(error){
+try{
 
-    message.innerText =
-      "Login failed: " + error.message;
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-  }
+message.innerText =
+"Login successful.";
+
+}
+
+catch(error){
+
+message.innerText =
+"Login failed: "
++ error.message;
+
+}
 
 };
 
 
-/* =========================================
-   AUTH CHECK
-========================================= */
 
-onAuthStateChanged(auth, user => {
+/* =====================================
+   LOGIN STATUS
+===================================== */
 
-  const loginBox =
-    document.getElementById("loginBox");
+onAuthStateChanged(
+auth,
+user => {
 
-  const adminPanel =
-    document.getElementById("adminPanel");
+const loginBox =
+document.getElementById(
+"loginBox"
+);
 
-  if(user){
+const adminPanel =
+document.getElementById(
+"adminPanel"
+);
 
-    loginBox.classList.add("hidden");
 
-    adminPanel.classList.remove("hidden");
+if(user){
 
-    loadProducts();
+loginBox.classList.add(
+"hidden"
+);
 
-  }else{
+adminPanel.classList.remove(
+"hidden"
+);
 
-    loginBox.classList.remove("hidden");
+loadProducts();
 
-    adminPanel.classList.add("hidden");
+}
 
-  }
+else{
+
+loginBox.classList.remove(
+"hidden"
+);
+
+adminPanel.classList.add(
+"hidden"
+);
+
+}
 
 });
 
 
-/* =========================================
+
+/* =====================================
    ADD PRODUCT
-========================================= */
+===================================== */
 
-window.addProduct = async function(){
+window.addProduct =
+async function(){
 
-  const name =
-    document.getElementById("productName").value.trim();
-
-  const price =
-    document.getElementById("productPrice").value;
-
-  const category =
-    document.getElementById("productCategory").value;
-
-  const image =
-    document.getElementById("productImage").value.trim();
-
-  const message =
-    document.getElementById("addMessage");
+const name =
+document
+.getElementById(
+"productName"
+)
+.value
+.trim();
 
 
-  if(!name || !price || !image){
-
-    message.innerText =
-      "Product name, price aur image URL bharen.";
-
-    return;
-  }
-
-
-  try{
-
-    await addDoc(
-      collection(db,"products"),
-      {
-        name:name,
-        price:Number(price),
-        category:category,
-        image:image,
-        createdAt:Date.now()
-      }
-    );
+const price =
+document
+.getElementById(
+"productPrice"
+)
+.value;
 
 
-    message.innerText =
-      "Product successfully add ho gaya.";
-
-    document.getElementById("productName").value="";
-    document.getElementById("productPrice").value="";
-    document.getElementById("productImage").value="";
-
-    loadProducts();
-
-  }catch(error){
-
-    message.innerText =
-      "Error: " + error.message;
-
-  }
-
-};
+const category =
+document
+.getElementById(
+"productCategory"
+)
+.value;
 
 
-/* =========================================
-   LOAD PRODUCTS
-========================================= */
-
-async function loadProducts(){
-
-  const list =
-    document.getElementById("productsList");
-
-  list.innerHTML="Loading...";
-
-  try{
-
-    const snapshot =
-      await getDocs(
-        collection(db,"products")
-      );
-
-    list.innerHTML="";
-
-    if(snapshot.empty){
-
-      list.innerHTML =
-        "<p>Abhi koi product nahi hai.</p>";
-
-      return;
-    }
+const image =
+document
+.getElementById(
+"productImage"
+)
+.value
+.trim();
 
 
-    snapshot.forEach(item => {
+const message =
+document
+.getElementById(
+"addMessage"
+);
 
-      const data = item.data();
 
-      const div =
-        document.createElement("div");
+if(!name || !price || !image){
 
-      div.className="product";
+message.innerText =
+"Product name, price aur image URL bharen.";
 
-      div.innerHTML=`
-
-        <img
-          src="${data.image}"
-          alt="${data.name}"
-        >
-
-        <h3>${data.name}</h3>
-
-        <div class="price">
-          ₹${data.price}
-        </div>
-
-        <p>
-          Category: ${data.category}
-        </p>
-
-        <button
-          class="delete"
-          onclick="deleteProduct('${item.id}')"
-        >
-          DELETE PRODUCT
-        </button>
-
-      `;
-
-      list.appendChild(div);
-
-    });
-
-  }catch(error){
-
-    list.innerHTML =
-      "Products load nahi ho rahe: "
-      + error.message;
-
-  }
+return;
 
 }
 
 
-/* =========================================
-   DELETE PRODUCT
-========================================= */
+try{
 
-window.deleteProduct = async function(id){
+await addDoc(
 
-  const confirmDelete =
-    confirm(
-      "Kya aap is product ko delete karna chahte hain?"
-    );
+collection(
+db,
+"products"
+),
 
-  if(!confirmDelete){
-    return;
-  }
+{
+
+name:name,
+
+price:Number(price),
+
+category:category,
+
+image:image,
+
+createdAt:Date.now()
+
+}
+
+);
 
 
-  try{
+message.innerText =
+"Product successfully add ho gaya.";
 
-    await deleteDoc(
-      doc(db,"products",id)
-    );
 
-    alert("Product delete ho gaya.");
+document
+.getElementById(
+"productName"
+)
+.value="";
 
-    loadProducts();
 
-  }catch(error){
+document
+.getElementById(
+"productPrice"
+)
+.value="";
 
-    alert(
-      "Delete failed: "
-      + error.message
-    );
 
-  }
+document
+.getElementById(
+"productImage"
+)
+.value="";
+
+
+loadProducts();
+
+}
+
+catch(error){
+
+message.innerText =
+"Error: "
++ error.message;
+
+}
 
 };
 
 
-/* =========================================
+
+/* =====================================
+   LOAD PRODUCTS
+===================================== */
+
+async function loadProducts(){
+
+const list =
+document.getElementById(
+"productsList"
+);
+
+list.innerHTML =
+"Loading...";
+
+
+try{
+
+const snapshot =
+await getDocs(
+collection(
+db,
+"products"
+)
+);
+
+
+list.innerHTML="";
+
+
+if(snapshot.empty){
+
+list.innerHTML =
+"<p>Abhi koi product nahi hai.</p>";
+
+return;
+
+}
+
+
+snapshot.forEach(
+item => {
+
+const data =
+item.data();
+
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"product";
+
+
+div.innerHTML = `
+
+<img
+src="${data.image}"
+alt="${data.name}"
+>
+
+<h3>
+${data.name}
+</h3>
+
+<div class="price">
+₹${data.price}
+</div>
+
+<p>
+Category: ${data.category}
+</p>
+
+<button
+class="delete"
+onclick="deleteProduct('${item.id}')"
+>
+DELETE PRODUCT
+</button>
+
+`;
+
+
+list.appendChild(div);
+
+});
+
+}
+
+catch(error){
+
+list.innerHTML =
+"Products load nahi ho rahe: "
++ error.message;
+
+}
+
+}
+
+
+
+/* =====================================
+   DELETE PRODUCT
+===================================== */
+
+window.deleteProduct =
+async function(id){
+
+const confirmDelete =
+confirm(
+"Kya aap is product ko delete karna chahte hain?"
+);
+
+
+if(!confirmDelete){
+
+return;
+
+}
+
+
+try{
+
+await deleteDoc(
+doc(
+db,
+"products",
+id
+)
+);
+
+
+alert(
+"Product delete ho gaya."
+);
+
+
+loadProducts();
+
+}
+
+catch(error){
+
+alert(
+"Delete failed: "
++ error.message
+);
+
+}
+
+};
+
+
+
+/* =====================================
    LOGOUT
-========================================= */
+===================================== */
 
-window.logout = async function(){
+window.logout =
+async function(){
 
-  await signOut(auth);
+await signOut(auth);
 
 };
 
 </script>
 
 </body>
-  </html>
+</html>

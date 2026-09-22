@@ -36,7 +36,7 @@ header p{
 }
 
 .container{
-  max-width:600px;
+  max-width:650px;
   margin:20px auto;
   padding:15px;
 }
@@ -79,6 +79,14 @@ button{
   background:#d32f2f;
 }
 
+.edit{
+  background:#1976d2;
+}
+
+.save{
+  background:#188038;
+}
+
 .logout{
   background:#555;
 }
@@ -118,6 +126,36 @@ button{
   margin:8px 0;
 }
 
+.order{
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:15px;
+  margin-top:15px;
+  background:#fafafa;
+}
+
+.order p{
+  margin:7px 0;
+}
+
+.status{
+  font-weight:bold;
+}
+
+.logoPreview{
+  width:120px;
+  height:120px;
+  object-fit:contain;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.small{
+  font-size:13px;
+  color:#666;
+}
+
 </style>
 </head>
 
@@ -125,7 +163,9 @@ button{
 
 <header>
 
-<h1>Clothing Store India</h1>
+<h1 id="headerStoreName">
+Clothing Store India
+</h1>
 
 <p>Admin Panel</p>
 
@@ -169,6 +209,58 @@ class="message">
 <!-- ADMIN PANEL -->
 
 <div id="adminPanel" class="hidden">
+
+
+<!-- STORE SETTINGS -->
+
+<div class="card">
+
+<h2>Store Settings</h2>
+
+<label>Shop Name</label>
+
+<input
+type="text"
+id="storeName"
+placeholder="Shop Name"
+>
+
+<label>UPI ID</label>
+
+<input
+type="text"
+id="upiId"
+placeholder="example@upi"
+>
+
+<label>Shop Logo Image URL</label>
+
+<input
+type="text"
+id="logoUrl"
+placeholder="Logo Image URL"
+>
+
+<img
+id="logoPreview"
+class="logoPreview hidden"
+alt="Logo Preview"
+>
+
+<button
+class="save"
+onclick="saveSettings()"
+>
+SAVE STORE SETTINGS
+</button>
+
+<div
+id="settingsMessage"
+class="message">
+</div>
+
+</div>
+
 
 
 <!-- ADD PRODUCT -->
@@ -234,6 +326,20 @@ Loading...
 
 
 
+<!-- ORDERS -->
+
+<div class="card">
+
+<h2>Customer Orders</h2>
+
+<div id="ordersList">
+Loading...
+</div>
+
+</div>
+
+
+
 <!-- LOGOUT -->
 
 <div class="card">
@@ -280,7 +386,10 @@ collection,
 addDoc,
 getDocs,
 deleteDoc,
-doc
+updateDoc,
+doc,
+setDoc,
+getDoc
 }
 
 from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
@@ -288,7 +397,7 @@ from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
 /* =====================================
-   YOUR FIREBASE CONFIG
+   FIREBASE CONFIG
 ===================================== */
 
 const firebaseConfig = {
@@ -416,7 +525,9 @@ adminPanel.classList.remove(
 "hidden"
 );
 
+loadSettings();
 loadProducts();
+loadOrders();
 
 }
 
@@ -433,6 +544,198 @@ adminPanel.classList.add(
 }
 
 });
+
+
+
+/* =====================================
+   STORE SETTINGS LOAD
+===================================== */
+
+async function loadSettings(){
+
+try{
+
+const settingsRef =
+doc(
+db,
+"settings",
+"store"
+);
+
+const settingsSnap =
+await getDoc(settingsRef);
+
+
+if(settingsSnap.exists()){
+
+const data =
+settingsSnap.data();
+
+
+document
+.getElementById("storeName")
+.value =
+data.storeName || "Clothing Store India";
+
+
+document
+.getElementById("upiId")
+.value =
+data.upiId || "";
+
+
+document
+.getElementById("logoUrl")
+.value =
+data.logoUrl || "";
+
+
+document
+.getElementById("headerStoreName")
+.innerText =
+data.storeName || "Clothing Store India";
+
+
+if(data.logoUrl){
+
+const preview =
+document.getElementById(
+"logoPreview"
+);
+
+preview.src =
+data.logoUrl;
+
+preview.classList.remove(
+"hidden"
+);
+
+}
+
+}
+
+}
+
+catch(error){
+
+console.log(
+"Settings load error:",
+error
+);
+
+}
+
+}
+
+
+
+/* =====================================
+   SAVE STORE SETTINGS
+===================================== */
+
+window.saveSettings =
+async function(){
+
+const storeName =
+document
+.getElementById("storeName")
+.value
+.trim();
+
+const upiId =
+document
+.getElementById("upiId")
+.value
+.trim();
+
+const logoUrl =
+document
+.getElementById("logoUrl")
+.value
+.trim();
+
+const message =
+document
+.getElementById(
+"settingsMessage"
+);
+
+
+if(!storeName){
+
+message.innerText =
+"Shop Name bharen.";
+
+return;
+
+}
+
+
+try{
+
+await setDoc(
+
+doc(
+db,
+"settings",
+"store"
+),
+
+{
+
+storeName:storeName,
+
+upiId:upiId,
+
+logoUrl:logoUrl,
+
+updatedAt:Date.now()
+
+}
+
+);
+
+
+document
+.getElementById(
+"headerStoreName"
+)
+.innerText =
+storeName;
+
+
+const preview =
+document.getElementById(
+"logoPreview"
+);
+
+
+if(logoUrl){
+
+preview.src =
+logoUrl;
+
+preview.classList.remove(
+"hidden"
+);
+
+}
+
+
+message.innerText =
+"Store settings successfully save ho gayi.";
+
+}
+
+catch(error){
+
+message.innerText =
+"Settings save failed: "
++ error.message;
+
+}
+
+};
 
 
 
@@ -636,6 +939,13 @@ Category: ${data.category}
 </p>
 
 <button
+class="edit"
+onclick="editProduct('${item.id}')"
+>
+EDIT PRODUCT
+</button>
+
+<button
 class="delete"
 onclick="deleteProduct('${item.id}')"
 >
@@ -660,6 +970,110 @@ list.innerHTML =
 }
 
 }
+
+
+
+/* =====================================
+   EDIT PRODUCT
+===================================== */
+
+window.editProduct =
+async function(id){
+
+const name =
+prompt(
+"Product ka naam:"
+);
+
+if(name === null){
+
+return;
+
+}
+
+
+const price =
+prompt(
+"Product ki price:"
+);
+
+if(price === null){
+
+return;
+
+}
+
+
+const image =
+prompt(
+"Product image URL:"
+);
+
+if(image === null){
+
+return;
+
+}
+
+
+const category =
+prompt(
+"Category: Men ya Women",
+"Men"
+);
+
+if(category === null){
+
+return;
+
+}
+
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"products",
+id
+),
+
+{
+
+name:name.trim(),
+
+price:Number(price),
+
+image:image.trim(),
+
+category:category.trim(),
+
+updatedAt:Date.now()
+
+}
+
+);
+
+
+alert(
+"Product successfully update ho gaya."
+);
+
+loadProducts();
+
+}
+
+catch(error){
+
+alert(
+"Update failed: "
++ error.message
+);
+
+}
+
+};
 
 
 
@@ -717,6 +1131,254 @@ alert(
 
 
 /* =====================================
+   LOAD ORDERS
+===================================== */
+
+async function loadOrders(){
+
+const list =
+document.getElementById(
+"ordersList"
+);
+
+list.innerHTML =
+"Loading...";
+
+
+try{
+
+const snapshot =
+await getDocs(
+collection(
+db,
+"orders"
+)
+);
+
+
+list.innerHTML="";
+
+
+if(snapshot.empty){
+
+list.innerHTML =
+"<p>Abhi koi order nahi hai.</p>";
+
+return;
+
+}
+
+
+snapshot.forEach(
+item => {
+
+const data =
+item.data();
+
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"order";
+
+
+div.innerHTML = `
+
+<h3>
+Order
+</h3>
+
+<p>
+<strong>Name:</strong>
+${data.name || ""}
+</p>
+
+<p>
+<strong>Mobile:</strong>
+${data.mobile || ""}
+</p>
+
+<p>
+<strong>Address:</strong>
+${data.address || ""}
+</p>
+
+<p>
+<strong>PIN Code:</strong>
+${data.pincode || data.pinCode || ""}
+</p>
+
+<p>
+<strong>Product:</strong>
+${data.productName || ""}
+</p>
+
+<p>
+<strong>Price:</strong>
+₹${data.price || ""}
+</p>
+
+<p>
+<strong>Status:</strong>
+<span class="status">
+${data.status || "New"}
+</span>
+</p>
+
+<button
+class="edit"
+onclick="updateOrderStatus('${item.id}')"
+>
+UPDATE ORDER STATUS
+</button>
+
+<button
+class="delete"
+onclick="deleteOrder('${item.id}')"
+>
+DELETE ORDER
+</button>
+
+`;
+
+list.appendChild(div);
+
+});
+
+}
+
+catch(error){
+
+list.innerHTML =
+"Orders load nahi ho rahe: "
++ error.message;
+
+}
+
+}
+
+
+
+/* =====================================
+   UPDATE ORDER STATUS
+===================================== */
+
+window.updateOrderStatus =
+async function(id){
+
+const status =
+prompt(
+"Order Status likhen:",
+"Processing"
+);
+
+if(status === null){
+
+return;
+
+}
+
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"orders",
+id
+),
+
+{
+
+status:status.trim(),
+
+updatedAt:Date.now()
+
+}
+
+);
+
+
+alert(
+"Order status update ho gaya."
+);
+
+loadOrders();
+
+}
+
+catch(error){
+
+alert(
+"Status update failed: "
++ error.message
+);
+
+}
+
+};
+
+
+
+/* =====================================
+   DELETE ORDER
+===================================== */
+
+window.deleteOrder =
+async function(id){
+
+const confirmDelete =
+confirm(
+"Kya aap is order ko delete karna chahte hain?"
+);
+
+
+if(!confirmDelete){
+
+return;
+
+}
+
+
+try{
+
+await deleteDoc(
+
+doc(
+db,
+"orders",
+id
+)
+
+);
+
+
+alert(
+"Order delete ho gaya."
+);
+
+loadOrders();
+
+}
+
+catch(error){
+
+alert(
+"Order delete failed: "
++ error.message
+);
+
+}
+
+};
+
+
+
+/* =====================================
    LOGOUT
 ===================================== */
 
@@ -730,4 +1392,4 @@ await signOut(auth);
 </script>
 
 </body>
-</html>
+  </html>

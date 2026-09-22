@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clothing Store India - Admin</title>
+<title>Clothing Store India - Admin Panel</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -15,80 +14,167 @@
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#f5f5f5;
+  background:#f2f3f7;
   color:#222;
 }
 
 header{
   background:#111;
   color:white;
-  padding:18px;
+  padding:18px 15px;
   text-align:center;
 }
 
 header h1{
   margin:0;
-  font-size:25px;
+  font-size:24px;
 }
 
 header p{
   margin:6px 0 0;
+  color:#ddd;
 }
 
 .container{
-  max-width:650px;
-  margin:20px auto;
+  max-width:900px;
+  margin:auto;
   padding:15px;
 }
 
 .card{
   background:white;
-  padding:20px;
-  border-radius:14px;
-  margin-bottom:20px;
-  box-shadow:0 3px 12px rgba(0,0,0,.10);
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 h2{
   margin-top:0;
+  font-size:21px;
 }
 
-input,
-select{
+input,select,textarea{
   width:100%;
   padding:13px;
-  margin:8px 0 14px;
+  margin:7px 0 12px;
   border:1px solid #ccc;
   border-radius:8px;
-  font-size:16px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
 }
 
 button{
-  width:100%;
-  padding:13px;
   border:0;
   border-radius:8px;
+  padding:12px 16px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:4px;
+}
+
+.primary{
   background:#111;
   color:white;
-  font-size:16px;
-  cursor:pointer;
-  margin-top:5px;
 }
 
-.delete{
-  background:#d32f2f;
+.green{
+  background:#16803c;
+  color:white;
 }
 
-.edit{
-  background:#1976d2;
+.blue{
+  background:#1266d6;
+  color:white;
 }
 
-.save{
-  background:#188038;
+.red{
+  background:#d71920;
+  color:white;
 }
 
-.logout{
-  background:#555;
+.gray{
+  background:#777;
+  color:white;
+}
+
+.login-box{
+  max-width:420px;
+  margin:60px auto;
+}
+
+.product{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:12px;
+}
+
+.product img{
+  width:100%;
+  max-width:180px;
+  height:180px;
+  object-fit:contain;
+  display:block;
+  margin:auto;
+  border-radius:8px;
+  background:#f5f5f5;
+}
+
+.product h3{
+  margin-bottom:5px;
+}
+
+.price{
+  font-size:19px;
+  font-weight:bold;
+}
+
+.category{
+  color:#666;
+  font-size:14px;
+}
+
+.logo-preview{
+  width:130px;
+  height:130px;
+  object-fit:contain;
+  border:1px solid #ddd;
+  border-radius:10px;
+  display:block;
+  margin:10px 0;
+  background:#f7f7f7;
+}
+
+.order{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:12px;
+}
+
+.order-title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.order-info{
+  line-height:1.6;
+  font-size:14px;
+  word-break:break-word;
+}
+
+.status{
+  font-weight:bold;
+  padding:8px;
+  border-radius:7px;
+  margin:8px 0;
 }
 
 .hidden{
@@ -98,57 +184,8 @@ button{
 .message{
   padding:10px;
   border-radius:8px;
-  margin-top:12px;
-  background:#eee;
-}
-
-.product{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:12px;
-  margin-top:15px;
-}
-
-.product img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.product h3{
-  margin-bottom:5px;
-}
-
-.price{
-  font-size:20px;
-  font-weight:bold;
-  margin:8px 0;
-}
-
-.order{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:15px;
-  margin-top:15px;
-  background:#fafafa;
-}
-
-.order p{
-  margin:7px 0;
-}
-
-.status{
-  font-weight:bold;
-}
-
-.logoPreview{
-  width:120px;
-  height:120px;
-  object-fit:contain;
-  border:1px solid #ddd;
-  border-radius:10px;
   margin:10px 0;
+  background:#eee;
 }
 
 .small{
@@ -156,18 +193,58 @@ button{
   color:#666;
 }
 
+hr{
+  border:0;
+  border-top:1px solid #ddd;
+  margin:20px 0;
+}
 </style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
+<div id="loginPage">
+
+  <div class="login-box card">
+
+    <h2>🔐 Admin Login</h2>
+
+    <input
+      type="email"
+      id="loginEmail"
+      placeholder="Admin Email"
+    >
+
+    <input
+      type="password"
+      id="loginPassword"
+      placeholder="Password"
+    >
+
+    <button
+      class="primary"
+      style="width:100%;"
+      onclick="loginAdmin()"
+    >
+      LOGIN
+    </button>
+
+    <div id="loginMessage"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+<div id="adminPage" class="hidden">
+
 <header>
 
-<h1 id="headerStoreName">
-Clothing Store India
-</h1>
+  <h1>Clothing Store India</h1>
 
-<p>Admin Panel</p>
+  <p>Admin Panel</p>
 
 </header>
 
@@ -175,1221 +252,1184 @@ Clothing Store India
 <div class="container">
 
 
-<!-- ADMIN LOGIN -->
-
-<div id="loginBox" class="card">
-
-<h2>Admin Login</h2>
-
-<input
-type="email"
-id="email"
-placeholder="Admin Email"
->
-
-<input
-type="password"
-id="password"
-placeholder="Password"
->
-
-<button onclick="login()">
-LOGIN
-</button>
-
-<div
-id="loginMessage"
-class="message">
-</div>
-
-</div>
-
-
-
-<!-- ADMIN PANEL -->
-
-<div id="adminPanel" class="hidden">
-
-
 <!-- STORE SETTINGS -->
-
 <div class="card">
 
-<h2>Store Settings</h2>
+  <h2>🏪 Store Settings</h2>
 
-<label>Shop Name</label>
+  <label>Shop Name</label>
 
-<input
-type="text"
-id="storeName"
-placeholder="Shop Name"
->
+  <input
+    type="text"
+    id="storeName"
+    placeholder="Shop Name"
+  >
 
-<label>UPI ID</label>
+  <label>UPI ID</label>
 
-<input
-type="text"
-id="upiId"
-placeholder="example@upi"
->
+  <input
+    type="text"
+    id="upiId"
+    placeholder="UPI ID"
+  >
 
-<label>Shop Logo Image URL</label>
+  <label>Logo Image URL</label>
 
-<input
-type="text"
-id="logoUrl"
-placeholder="Logo Image URL"
->
+  <input
+    type="url"
+    id="logoUrl"
+    placeholder="Logo Image URL"
+    oninput="previewLogo()"
+  >
 
-<img
-id="logoPreview"
-class="logoPreview hidden"
-alt="Logo Preview"
->
+  <img
+    id="logoPreview"
+    class="logo-preview"
+    src=""
+    alt="Logo Preview"
+  >
 
-<button
-class="save"
-onclick="saveSettings()"
->
-SAVE STORE SETTINGS
-</button>
+  <button
+    class="green"
+    onclick="saveSettings()"
+  >
+    SAVE STORE SETTINGS
+  </button>
 
-<div
-id="settingsMessage"
-class="message">
+  <div id="settingsMessage"></div>
+
 </div>
 
-</div>
 
-
-
-<!-- ADD PRODUCT -->
-
+<!-- ADD / EDIT PRODUCT -->
 <div class="card">
 
-<h2>Add New Product</h2>
+  <h2 id="productFormTitle">➕ Add New Product</h2>
 
-<input
-type="text"
-id="productName"
-placeholder="Product Name"
->
+  <input
+    type="hidden"
+    id="productId"
+  >
 
-<input
-type="number"
-id="productPrice"
-placeholder="Price ₹"
->
+  <label>Product Name</label>
 
-<select id="productCategory">
+  <input
+    type="text"
+    id="productName"
+    placeholder="Example: Men's Shirt"
+  >
 
-<option value="Men">
-Men
-</option>
+  <label>Price</label>
 
-<option value="Women">
-Women
-</option>
+  <input
+    type="number"
+    id="productPrice"
+    placeholder="Example: 999"
+  >
 
-</select>
+  <label>Category</label>
 
-<input
-type="text"
-id="productImage"
-placeholder="Product Image URL"
->
+  <select id="productCategory">
 
-<button onclick="addProduct()">
-ADD PRODUCT
-</button>
+    <option value="Men">Men</option>
 
-<div
-id="addMessage"
-class="message">
+    <option value="Women">Women</option>
+
+  </select>
+
+  <label>Product Image URL</label>
+
+  <input
+    type="url"
+    id="productImage"
+    placeholder="Paste product image URL"
+  >
+
+  <button
+    class="primary"
+    onclick="saveProduct()"
+    id="productSaveButton"
+  >
+    ADD PRODUCT
+  </button>
+
+  <button
+    class="gray hidden"
+    onclick="cancelEdit()"
+    id="cancelEditButton"
+  >
+    CANCEL EDIT
+  </button>
+
+  <div id="productMessage"></div>
+
 </div>
-
-</div>
-
 
 
 <!-- PRODUCTS -->
-
 <div class="card">
 
-<h2>Your Products</h2>
+  <h2>👕 Your Products</h2>
 
-<div id="productsList">
-Loading...
+  <div id="productsList">
+    Loading products...
+  </div>
+
 </div>
-
-</div>
-
 
 
 <!-- ORDERS -->
-
 <div class="card">
 
-<h2>Customer Orders</h2>
+  <h2>📦 Customer Orders</h2>
 
-<div id="ordersList">
-Loading...
+  <button
+    class="blue"
+    onclick="loadOrders()"
+  >
+    🔄 REFRESH ORDERS
+  </button>
+
+  <div id="ordersList">
+    Loading orders...
+  </div>
+
 </div>
-
-</div>
-
 
 
 <!-- LOGOUT -->
-
 <div class="card">
 
-<button
-class="logout"
-onclick="logout()">
-LOGOUT
-</button>
+  <button
+    class="red"
+    style="width:100%;"
+    onclick="logoutAdmin()"
+  >
+    🚪 LOGOUT
+  </button>
 
 </div>
 
-</div>
 
 </div>
-
+</div>
 
 
 <script type="module">
 
-
-/* =====================================
-   FIREBASE IMPORT
-===================================== */
-
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
 import {
-getAuth,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-}
-
-from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-updateDoc,
-doc,
-setDoc,
-getDoc
-}
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
-from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
-
-
-/* =====================================
-   FIREBASE CONFIG
-===================================== */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyDjG5fKH7apknSPMUCBs3pVa91Hj5vMnB4",
+  apiKey: "AIzaSyDjG5fKH7apknSPMUCBs3pVa91Hj5vMnB4",
 
-authDomain:
-"clothing-store-india.firebaseapp.com",
+  authDomain: "clothing-store-india.firebaseapp.com",
 
-projectId:
-"clothing-store-india",
+  projectId: "clothing-store-india",
 
-storageBucket:
-"clothing-store-india.firebasestorage.app",
+  storageBucket: "clothing-store-india.firebasestorage.app",
 
-messagingSenderId:
-"1032694314798",
+  messagingSenderId: "1032694314798",
 
-appId:
-"1:1032694314798:web:00484f9e6fc47394ddacbf"
+  appId: "1:1032694314798:web:00484f9e6fc47394ddacbf"
 
 };
 
 
+const app = initializeApp(firebaseConfig);
 
-/* =====================================
-   START FIREBASE
-===================================== */
+const auth = getAuth(app);
 
-const app =
-initializeApp(firebaseConfig);
-
-const auth =
-getAuth(app);
-
-const db =
-getFirestore(app);
+const db = getFirestore(app);
 
 
-
-/* =====================================
-   ADMIN LOGIN
-===================================== */
-
-window.login = async function(){
-
-const email =
-document
-.getElementById("email")
-.value
-.trim();
-
-const password =
-document
-.getElementById("password")
-.value;
-
-const message =
-document
-.getElementById("loginMessage");
+const ADMIN_EMAIL = "sk6457520@gmail.com";
 
 
-if(!email || !password){
+/* =========================
+   LOGIN
+========================= */
 
-message.innerText =
-"Email aur password dono bharen.";
+window.loginAdmin = async function(){
 
-return;
+  const email =
+    document.getElementById("loginEmail").value.trim();
 
-}
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const message =
+    document.getElementById("loginMessage");
 
 
-try{
+  if(!email || !password){
 
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
+    message.innerHTML =
+      '<div class="message">Email aur password bharen.</div>';
 
-message.innerText =
-"Login successful.";
+    return;
+  }
 
-}
 
-catch(error){
+  try{
 
-message.innerText =
-"Login failed: "
-+ error.message;
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-}
+  }catch(error){
+
+    message.innerHTML =
+      '<div class="message">Login failed. Email ya password check karein.</div>';
+
+  }
 
 };
 
 
+/* =========================
+   AUTH CHECK
+========================= */
 
-/* =====================================
-   LOGIN STATUS
-===================================== */
+onAuthStateChanged(auth, async(user)=>{
 
-onAuthStateChanged(
-auth,
-user => {
+  if(user && user.email === ADMIN_EMAIL){
 
-const loginBox =
-document.getElementById(
-"loginBox"
-);
+    document
+      .getElementById("loginPage")
+      .classList.add("hidden");
 
-const adminPanel =
-document.getElementById(
-"adminPanel"
-);
+    document
+      .getElementById("adminPage")
+      .classList.remove("hidden");
 
 
-if(user){
+    await loadSettings();
 
-loginBox.classList.add(
-"hidden"
-);
+    await loadProducts();
 
-adminPanel.classList.remove(
-"hidden"
-);
+    await loadOrders();
 
-loadSettings();
-loadProducts();
-loadOrders();
+  }
 
-}
+  else{
 
-else{
+    document
+      .getElementById("loginPage")
+      .classList.remove("hidden");
 
-loginBox.classList.remove(
-"hidden"
-);
+    document
+      .getElementById("adminPage")
+      .classList.add("hidden");
 
-adminPanel.classList.add(
-"hidden"
-);
-
-}
+  }
 
 });
 
 
+/* =========================
+   LOGOUT
+========================= */
 
-/* =====================================
-   STORE SETTINGS LOAD
-===================================== */
+window.logoutAdmin = async function(){
+
+  await signOut(auth);
+
+};
+
+
+/* =========================
+   STORE SETTINGS
+========================= */
 
 async function loadSettings(){
 
-try{
+  try{
 
-const settingsRef =
-doc(
-db,
-"settings",
-"store"
-);
+    const ref =
+      doc(db,"settings","store");
 
-const settingsSnap =
-await getDoc(settingsRef);
+    const snap =
+      await getDoc(ref);
 
 
-if(settingsSnap.exists()){
+    if(snap.exists()){
 
-const data =
-settingsSnap.data();
-
-
-document
-.getElementById("storeName")
-.value =
-data.storeName || "Clothing Store India";
+      const data = snap.data();
 
 
-document
-.getElementById("upiId")
-.value =
-data.upiId || "";
+      document.getElementById("storeName").value =
+        data.storeName || "";
 
 
-document
-.getElementById("logoUrl")
-.value =
-data.logoUrl || "";
+      document.getElementById("upiId").value =
+        data.upiId || "";
 
 
-document
-.getElementById("headerStoreName")
-.innerText =
-data.storeName || "Clothing Store India";
+      document.getElementById("logoUrl").value =
+        data.logoUrl || "";
 
 
-if(data.logoUrl){
+      document.getElementById("logoPreview").src =
+        data.logoUrl || "";
 
-const preview =
-document.getElementById(
-"logoPreview"
-);
+    }
 
-preview.src =
-data.logoUrl;
+  }catch(error){
 
-preview.classList.remove(
-"hidden"
-);
+    console.log(error);
 
-}
-
-}
-
-}
-
-catch(error){
-
-console.log(
-"Settings load error:",
-error
-);
-
-}
+  }
 
 }
 
 
+window.previewLogo = function(){
 
-/* =====================================
-   SAVE STORE SETTINGS
-===================================== */
+  const url =
+    document.getElementById("logoUrl").value.trim();
 
-window.saveSettings =
-async function(){
-
-const storeName =
-document
-.getElementById("storeName")
-.value
-.trim();
-
-const upiId =
-document
-.getElementById("upiId")
-.value
-.trim();
-
-const logoUrl =
-document
-.getElementById("logoUrl")
-.value
-.trim();
-
-const message =
-document
-.getElementById(
-"settingsMessage"
-);
-
-
-if(!storeName){
-
-message.innerText =
-"Shop Name bharen.";
-
-return;
-
-}
-
-
-try{
-
-await setDoc(
-
-doc(
-db,
-"settings",
-"store"
-),
-
-{
-
-storeName:storeName,
-
-upiId:upiId,
-
-logoUrl:logoUrl,
-
-updatedAt:Date.now()
-
-}
-
-);
-
-
-document
-.getElementById(
-"headerStoreName"
-)
-.innerText =
-storeName;
-
-
-const preview =
-document.getElementById(
-"logoPreview"
-);
-
-
-if(logoUrl){
-
-preview.src =
-logoUrl;
-
-preview.classList.remove(
-"hidden"
-);
-
-}
-
-
-message.innerText =
-"Store settings successfully save ho gayi.";
-
-}
-
-catch(error){
-
-message.innerText =
-"Settings save failed: "
-+ error.message;
-
-}
+  document.getElementById("logoPreview").src =
+    url;
 
 };
 
 
+window.saveSettings = async function(){
 
-/* =====================================
-   ADD PRODUCT
-===================================== */
+  const storeName =
+    document.getElementById("storeName").value.trim();
 
-window.addProduct =
-async function(){
+  const upiId =
+    document.getElementById("upiId").value.trim();
 
-const name =
-document
-.getElementById(
-"productName"
-)
-.value
-.trim();
+  const logoUrl =
+    document.getElementById("logoUrl").value.trim();
 
 
-const price =
-document
-.getElementById(
-"productPrice"
-)
-.value;
+  if(!storeName){
+
+    alert("Shop Name bharen.");
+
+    return;
+
+  }
 
 
-const category =
-document
-.getElementById(
-"productCategory"
-)
-.value;
+  try{
+
+    await setDoc(
+
+      doc(db,"settings","store"),
+
+      {
+
+        storeName:storeName,
+
+        upiId:upiId,
+
+        logoUrl:logoUrl,
+
+        updatedAt:Date.now()
+
+      },
+
+      {merge:true}
+
+    );
 
 
-const image =
-document
-.getElementById(
-"productImage"
-)
-.value
-.trim();
+    document.getElementById("settingsMessage").innerHTML =
+      '<div class="message">✅ Store settings save ho gayi.</div>';
 
 
-const message =
-document
-.getElementById(
-"addMessage"
-);
+  }catch(error){
 
+    console.error(error);
 
-if(!name || !price || !image){
+    document.getElementById("settingsMessage").innerHTML =
+      '<div class="message">❌ Settings save nahi hui.</div>';
 
-message.innerText =
-"Product name, price aur image URL bharen.";
-
-return;
-
-}
-
-
-try{
-
-await addDoc(
-
-collection(
-db,
-"products"
-),
-
-{
-
-name:name,
-
-price:Number(price),
-
-category:category,
-
-image:image,
-
-createdAt:Date.now()
-
-}
-
-);
-
-
-message.innerText =
-"Product successfully add ho gaya.";
-
-
-document
-.getElementById(
-"productName"
-)
-.value="";
-
-
-document
-.getElementById(
-"productPrice"
-)
-.value="";
-
-
-document
-.getElementById(
-"productImage"
-)
-.value="";
-
-
-loadProducts();
-
-}
-
-catch(error){
-
-message.innerText =
-"Error: "
-+ error.message;
-
-}
+  }
 
 };
 
 
+/* =========================
+   SAVE PRODUCT
+========================= */
 
-/* =====================================
+window.saveProduct = async function(){
+
+  const productId =
+    document.getElementById("productId").value.trim();
+
+  const name =
+    document.getElementById("productName").value.trim();
+
+  const price =
+    document.getElementById("productPrice").value.trim();
+
+  const category =
+    document.getElementById("productCategory").value;
+
+  const image =
+    document.getElementById("productImage").value.trim();
+
+
+  if(!name){
+
+    alert("Product Name bharen.");
+
+    return;
+
+  }
+
+
+  if(!price){
+
+    alert("Product Price bharen.");
+
+    return;
+
+  }
+
+
+  if(!image){
+
+    alert("Product Image URL bharen.");
+
+    return;
+
+  }
+
+
+  try{
+
+    if(productId){
+
+      await updateDoc(
+
+        doc(db,"products",productId),
+
+        {
+
+          name:name,
+
+          price:Number(price),
+
+          category:category,
+
+          image:image,
+
+          updatedAt:Date.now()
+
+        }
+
+      );
+
+
+      document.getElementById("productMessage").innerHTML =
+        '<div class="message">✅ Product update ho gaya.</div>';
+
+    }
+
+    else{
+
+      await addDoc(
+
+        collection(db,"products"),
+
+        {
+
+          name:name,
+
+          price:Number(price),
+
+          category:category,
+
+          image:image,
+
+          createdAt:Date.now(),
+
+          updatedAt:Date.now()
+
+        }
+
+      );
+
+
+      document.getElementById("productMessage").innerHTML =
+        '<div class="message">✅ Product add ho gaya.</div>';
+
+    }
+
+
+    clearProductForm();
+
+    await loadProducts();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById("productMessage").innerHTML =
+      '<div class="message">❌ Product save nahi hua.</div>';
+
+  }
+
+};
+
+
+/* =========================
    LOAD PRODUCTS
-===================================== */
+========================= */
 
 async function loadProducts(){
 
-const list =
-document.getElementById(
-"productsList"
-);
+  const list =
+    document.getElementById("productsList");
 
-list.innerHTML =
-"Loading...";
+  list.innerHTML =
+    "Loading products...";
 
 
-try{
+  try{
 
-const snapshot =
-await getDocs(
-collection(
-db,
-"products"
-)
-);
+    const snapshot =
+      await getDocs(collection(db,"products"));
 
 
-list.innerHTML="";
+    if(snapshot.empty){
+
+      list.innerHTML =
+        '<div class="message">Abhi koi product nahi hai.</div>';
+
+      return;
+
+    }
 
 
-if(snapshot.empty){
+    list.innerHTML = "";
 
-list.innerHTML =
-"<p>Abhi koi product nahi hai.</p>";
 
-return;
+    const products = [];
+
+
+    snapshot.forEach((item)=>{
+
+      products.push({
+
+        id:item.id,
+
+        ...item.data()
+
+      });
+
+    });
+
+
+    products.sort((a,b)=>
+      (b.createdAt || 0) -
+      (a.createdAt || 0)
+    );
+
+
+    products.forEach(product=>{
+
+      const div =
+        document.createElement("div");
+
+      div.className = "product";
+
+
+      const img =
+        document.createElement("img");
+
+      img.src =
+        product.image || "";
+
+      img.onerror = function(){
+
+        this.style.display = "none";
+
+      };
+
+
+      const title =
+        document.createElement("h3");
+
+      title.textContent =
+        product.name || "No Name";
+
+
+      const price =
+        document.createElement("div");
+
+      price.className = "price";
+
+      price.textContent =
+        "₹" + (product.price || 0);
+
+
+      const category =
+        document.createElement("div");
+
+      category.className = "category";
+
+      category.textContent =
+        "Category: " +
+        (product.category || "");
+
+
+      const editButton =
+        document.createElement("button");
+
+      editButton.className = "blue";
+
+      editButton.textContent = "✏️ EDIT";
+
+      editButton.onclick = function(){
+
+        editProduct(product);
+
+      };
+
+
+      const deleteButton =
+        document.createElement("button");
+
+      deleteButton.className = "red";
+
+      deleteButton.textContent = "🗑️ DELETE";
+
+      deleteButton.onclick = function(){
+
+        deleteProduct(product.id);
+
+      };
+
+
+      div.appendChild(img);
+
+      div.appendChild(title);
+
+      div.appendChild(price);
+
+      div.appendChild(category);
+
+      div.appendChild(editButton);
+
+      div.appendChild(deleteButton);
+
+      list.appendChild(div);
+
+    });
+
+
+  }catch(error){
+
+    console.error(error);
+
+    list.innerHTML =
+      '<div class="message">Products load nahi ho rahe.</div>';
+
+  }
 
 }
 
 
-snapshot.forEach(
-item => {
-
-const data =
-item.data();
-
-
-const div =
-document.createElement(
-"div"
-);
-
-div.className =
-"product";
-
-
-div.innerHTML = `
-
-<img
-src="${data.image}"
-alt="${data.name}"
->
-
-<h3>
-${data.name}
-</h3>
-
-<div class="price">
-₹${data.price}
-</div>
-
-<p>
-Category: ${data.category}
-</p>
-
-<button
-class="edit"
-onclick="editProduct('${item.id}')"
->
-EDIT PRODUCT
-</button>
-
-<button
-class="delete"
-onclick="deleteProduct('${item.id}')"
->
-DELETE PRODUCT
-</button>
-
-`;
-
-
-list.appendChild(div);
-
-});
-
-}
-
-catch(error){
-
-list.innerHTML =
-"Products load nahi ho rahe: "
-+ error.message;
-
-}
-
-}
-
-
-
-/* =====================================
+/* =========================
    EDIT PRODUCT
-===================================== */
+========================= */
 
-window.editProduct =
-async function(id){
+function editProduct(product){
 
-const name =
-prompt(
-"Product ka naam:"
-);
+  document.getElementById("productId").value =
+    product.id;
 
-if(name === null){
+  document.getElementById("productName").value =
+    product.name || "";
 
-return;
+  document.getElementById("productPrice").value =
+    product.price || "";
 
-}
+  document.getElementById("productCategory").value =
+    product.category || "Men";
 
-
-const price =
-prompt(
-"Product ki price:"
-);
-
-if(price === null){
-
-return;
-
-}
+  document.getElementById("productImage").value =
+    product.image || "";
 
 
-const image =
-prompt(
-"Product image URL:"
-);
-
-if(image === null){
-
-return;
-
-}
+  document.getElementById("productFormTitle").textContent =
+    "✏️ Edit Product";
 
 
-const category =
-prompt(
-"Category: Men ya Women",
-"Men"
-);
+  document.getElementById("productSaveButton").textContent =
+    "UPDATE PRODUCT";
 
-if(category === null){
 
-return;
+  document
+    .getElementById("cancelEditButton")
+    .classList.remove("hidden");
+
+
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
 
 }
 
 
-try{
+window.cancelEdit = function(){
 
-await updateDoc(
-
-doc(
-db,
-"products",
-id
-),
-
-{
-
-name:name.trim(),
-
-price:Number(price),
-
-image:image.trim(),
-
-category:category.trim(),
-
-updatedAt:Date.now()
-
-}
-
-);
-
-
-alert(
-"Product successfully update ho gaya."
-);
-
-loadProducts();
-
-}
-
-catch(error){
-
-alert(
-"Update failed: "
-+ error.message
-);
-
-}
+  clearProductForm();
 
 };
 
 
+function clearProductForm(){
 
-/* =====================================
+  document.getElementById("productId").value = "";
+
+  document.getElementById("productName").value = "";
+
+  document.getElementById("productPrice").value = "";
+
+  document.getElementById("productCategory").value = "Men";
+
+  document.getElementById("productImage").value = "";
+
+
+  document.getElementById("productFormTitle").textContent =
+    "➕ Add New Product";
+
+
+  document.getElementById("productSaveButton").textContent =
+    "ADD PRODUCT";
+
+
+  document
+    .getElementById("cancelEditButton")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================
    DELETE PRODUCT
-===================================== */
+========================= */
 
-window.deleteProduct =
-async function(id){
+window.deleteProduct = async function(id){
 
-const confirmDelete =
-confirm(
-"Kya aap is product ko delete karna chahte hain?"
-);
-
-
-if(!confirmDelete){
-
-return;
-
-}
+  const yes =
+    confirm(
+      "Kya aap is product ko delete karna chahte hain?"
+    );
 
 
-try{
+  if(!yes){
 
-await deleteDoc(
-doc(
-db,
-"products",
-id
-)
-);
+    return;
+
+  }
 
 
-alert(
-"Product delete ho gaya."
-);
+  try{
+
+    await deleteDoc(
+      doc(db,"products",id)
+    );
 
 
-loadProducts();
+    await loadProducts();
 
-}
 
-catch(error){
+  }catch(error){
 
-alert(
-"Delete failed: "
-+ error.message
-);
+    console.error(error);
 
-}
+    alert("Product delete nahi hua.");
+
+  }
 
 };
 
 
+/* =========================
+   ORDERS
+========================= */
 
-/* =====================================
-   LOAD ORDERS
-===================================== */
+window.loadOrders = async function(){
 
-async function loadOrders(){
+  const list =
+    document.getElementById("ordersList");
 
-const list =
-document.getElementById(
-"ordersList"
-);
-
-list.innerHTML =
-"Loading...";
+  list.innerHTML =
+    "Loading orders...";
 
 
-try{
+  try{
 
-const snapshot =
-await getDocs(
-collection(
-db,
-"orders"
-)
-);
+    const snapshot =
+      await getDocs(collection(db,"orders"));
 
 
-list.innerHTML="";
+    if(snapshot.empty){
+
+      list.innerHTML =
+        '<div class="message">Abhi koi customer order nahi hai.</div>';
+
+      return;
+
+    }
 
 
-if(snapshot.empty){
-
-list.innerHTML =
-"<p>Abhi koi order nahi hai.</p>";
-
-return;
-
-}
+    const orders = [];
 
 
-snapshot.forEach(
-item => {
+    snapshot.forEach(item=>{
 
-const data =
-item.data();
+      orders.push({
 
+        id:item.id,
 
-const div =
-document.createElement(
-"div"
-);
+        ...item.data()
 
-div.className =
-"order";
+      });
+
+    });
 
 
-div.innerHTML = `
-
-<h3>
-Order
-</h3>
-
-<p>
-<strong>Name:</strong>
-${data.name || ""}
-</p>
-
-<p>
-<strong>Mobile:</strong>
-${data.mobile || ""}
-</p>
-
-<p>
-<strong>Address:</strong>
-${data.address || ""}
-</p>
-
-<p>
-<strong>PIN Code:</strong>
-${data.pincode || data.pinCode || ""}
-</p>
-
-<p>
-<strong>Product:</strong>
-${data.productName || ""}
-</p>
-
-<p>
-<strong>Price:</strong>
-₹${data.price || ""}
-</p>
-
-<p>
-<strong>Status:</strong>
-<span class="status">
-${data.status || "New"}
-</span>
-</p>
-
-<button
-class="edit"
-onclick="updateOrderStatus('${item.id}')"
->
-UPDATE ORDER STATUS
-</button>
-
-<button
-class="delete"
-onclick="deleteOrder('${item.id}')"
->
-DELETE ORDER
-</button>
-
-`;
-
-list.appendChild(div);
-
-});
-
-}
-
-catch(error){
-
-list.innerHTML =
-"Orders load nahi ho rahe: "
-+ error.message;
-
-}
-
-}
+    orders.sort((a,b)=>
+      (b.createdAt || 0) -
+      (a.createdAt || 0)
+    );
 
 
+    list.innerHTML = "";
 
-/* =====================================
+
+    orders.forEach(order=>{
+
+      const div =
+        document.createElement("div");
+
+      div.className = "order";
+
+
+      const title =
+        document.createElement("div");
+
+      title.className = "order-title";
+
+      title.textContent =
+        "📦 Order ID: " +
+        order.id;
+
+
+      const info =
+        document.createElement("div");
+
+      info.className = "order-info";
+
+
+      let html = "";
+
+
+      if(order.name || order.customerName){
+
+        html +=
+          "<b>Name:</b> " +
+          escapeHtml(
+            order.name ||
+            order.customerName
+          ) +
+          "<br>";
+
+      }
+
+
+      if(order.mobile || order.phone){
+
+        html +=
+          "<b>Mobile:</b> " +
+          escapeHtml(
+            order.mobile ||
+            order.phone
+          ) +
+          "<br>";
+
+      }
+
+
+      if(order.address){
+
+        html +=
+          "<b>Address:</b> " +
+          escapeHtml(
+            order.address
+          ) +
+          "<br>";
+
+      }
+
+
+      if(order.pincode || order.pinCode){
+
+        html +=
+          "<b>PIN Code:</b> " +
+          escapeHtml(
+            order.pincode ||
+            order.pinCode
+          ) +
+          "<br>";
+
+      }
+
+
+      if(order.total){
+
+        html +=
+          "<b>Total:</b> ₹" +
+          escapeHtml(
+            String(order.total)
+          ) +
+          "<br>";
+
+      }
+
+
+      if(order.items){
+
+        let itemText = "";
+
+        try{
+
+          itemText =
+            typeof order.items === "string"
+            ? order.items
+            : JSON.stringify(order.items);
+
+        }catch(e){
+
+          itemText =
+            String(order.items);
+
+        }
+
+
+        html +=
+          "<b>Items:</b> " +
+          escapeHtml(itemText) +
+          "<br>";
+
+      }
+
+
+      if(order.createdAt){
+
+        html +=
+          "<b>Order Time:</b> " +
+          new Date(
+            order.createdAt
+          ).toLocaleString("en-IN") +
+          "<br>";
+
+      }
+
+
+      info.innerHTML = html;
+
+
+      const statusLabel =
+        document.createElement("div");
+
+      statusLabel.innerHTML =
+        "<b>Order Status:</b>";
+
+
+      const statusSelect =
+        document.createElement("select");
+
+
+      const statuses = [
+
+        "Pending",
+
+        "Confirmed",
+
+        "Shipped",
+
+        "Delivered",
+
+        "Cancelled"
+
+      ];
+
+
+      statuses.forEach(status=>{
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          status;
+
+        option.textContent =
+          status;
+
+        statusSelect.appendChild(option);
+
+      });
+
+
+      statusSelect.value =
+        order.status || "Pending";
+
+
+      statusSelect.onchange =
+        function(){
+
+          updateOrderStatus(
+            order.id,
+            this.value
+          );
+
+        };
+
+
+      const deleteButton =
+        document.createElement("button");
+
+      deleteButton.className = "red";
+
+      deleteButton.textContent =
+        "🗑️ DELETE ORDER";
+
+      deleteButton.onclick =
+        function(){
+
+          deleteOrder(order.id);
+
+        };
+
+
+      div.appendChild(title);
+
+      div.appendChild(info);
+
+      div.appendChild(statusLabel);
+
+      div.appendChild(statusSelect);
+
+      div.appendChild(
+        document.createElement("br")
+      );
+
+      div.appendChild(deleteButton);
+
+      list.appendChild(div);
+
+    });
+
+
+  }catch(error){
+
+    console.error(error);
+
+    list.innerHTML =
+      '<div class="message">Orders load nahi ho rahe.</div>';
+
+  }
+
+};
+
+
+/* =========================
    UPDATE ORDER STATUS
-===================================== */
+========================= */
 
-window.updateOrderStatus =
-async function(id){
+async function updateOrderStatus(id,status){
 
-const status =
-prompt(
-"Order Status likhen:",
-"Processing"
-);
+  try{
 
-if(status === null){
+    await updateDoc(
 
-return;
+      doc(db,"orders",id),
 
-}
+      {
 
+        status:status,
 
-try{
+        updatedAt:Date.now()
 
-await updateDoc(
+      }
 
-doc(
-db,
-"orders",
-id
-),
+    );
 
-{
+  }catch(error){
 
-status:status.trim(),
+    console.error(error);
 
-updatedAt:Date.now()
+    alert(
+      "Order status update nahi hua."
+    );
+
+  }
 
 }
 
-);
 
-
-alert(
-"Order status update ho gaya."
-);
-
-loadOrders();
-
-}
-
-catch(error){
-
-alert(
-"Status update failed: "
-+ error.message
-);
-
-}
-
-};
-
-
-
-/* =====================================
+/* =========================
    DELETE ORDER
-===================================== */
+========================= */
 
-window.deleteOrder =
-async function(id){
+async function deleteOrder(id){
 
-const confirmDelete =
-confirm(
-"Kya aap is order ko delete karna chahte hain?"
-);
-
-
-if(!confirmDelete){
-
-return;
-
-}
+  const yes =
+    confirm(
+      "Kya aap is order ko delete karna chahte hain?"
+    );
 
 
-try{
+  if(!yes){
 
-await deleteDoc(
+    return;
 
-doc(
-db,
-"orders",
-id
-)
-
-);
+  }
 
 
-alert(
-"Order delete ho gaya."
-);
+  try{
 
-loadOrders();
-
-}
-
-catch(error){
-
-alert(
-"Order delete failed: "
-+ error.message
-);
-
-}
-
-};
-
-
-
-/* =====================================
-   LOGOUT
-===================================== */
-
-window.logout =
-async function(){
-
-await signOut(auth);
-
-};
-
-</script>
-
-</body>
-  </html>
+    await deleteDoc(
+      doc(db,"o

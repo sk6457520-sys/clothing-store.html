@@ -780,9 +780,13 @@ document.getElementById("forgotBtn").onclick=function(){
     console.log(error);
 
     msg.innerHTML =
-    '<div class="message">❌ Password reset email nahi bheja ja saka.</div>';
+    '<div class="message">❌ Firebase Error: ' +
+    error.code +
+    '<br>' +
+    error.message +
+    '</div>';
 
-  });
+});
 
 };
 

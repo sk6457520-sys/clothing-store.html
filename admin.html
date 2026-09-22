@@ -1,9 +1,10 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clothing Store India - Admin</title>
+
+<title>Clothing Store India - Admin Panel</title>
 
 <style>
 *{
@@ -19,7 +20,7 @@ body{
 
 header{
   background:#111;
-  color:#fff;
+  color:white;
   text-align:center;
   padding:18px;
 }
@@ -40,7 +41,7 @@ header p{
 }
 
 .card{
-  background:#fff;
+  background:white;
   padding:18px;
   margin-bottom:18px;
   border-radius:14px;
@@ -78,28 +79,28 @@ button{
 .login-btn{
   width:100%;
   background:#111;
-  color:#fff;
+  color:white;
   font-size:17px;
 }
 
 .green{
   background:#16803c;
-  color:#fff;
+  color:white;
 }
 
 .blue{
   background:#1266d6;
-  color:#fff;
+  color:white;
 }
 
 .red{
   background:#d71920;
-  color:#fff;
+  color:white;
 }
 
 .gray{
   background:#777;
-  color:#fff;
+  color:white;
 }
 
 .hidden{
@@ -169,9 +170,7 @@ button{
 
 <body>
 
-
-<!-- ================= LOGIN ================= -->
-
+<!-- LOGIN PAGE -->
 <div id="loginPage">
 
   <div class="card login-card">
@@ -207,8 +206,7 @@ button{
 </div>
 
 
-<!-- ================= ADMIN PANEL ================= -->
-
+<!-- ADMIN PAGE -->
 <div id="adminPage" class="hidden">
 
 <header>
@@ -216,12 +214,9 @@ button{
   <p>Admin Panel</p>
 </header>
 
-
 <div class="container">
 
-
 <!-- STORE SETTINGS -->
-
 <div class="card">
 
 <h2>🏪 Store Settings</h2>
@@ -272,11 +267,12 @@ SAVE STORE SETTINGS
 </div>
 
 
-<!-- PRODUCT FORM -->
-
+<!-- ADD PRODUCT -->
 <div class="card">
 
-<h2 id="productTitle">➕ Add New Product</h2>
+<h2 id="productTitle">
+➕ Add New Product
+</h2>
 
 <input
   id="productId"
@@ -302,10 +298,8 @@ SAVE STORE SETTINGS
 <label>Category</label>
 
 <select id="productCategory">
-
-<option value="Men">Men</option>
-<option value="Women">Women</option>
-
+  <option value="Men">Men</option>
+  <option value="Women">Women</option>
 </select>
 
 <label>Product Image URL</label>
@@ -338,7 +332,6 @@ CANCEL
 
 
 <!-- PRODUCTS -->
-
 <div class="card">
 
 <h2>👕 Your Products</h2>
@@ -351,7 +344,6 @@ Loading...
 
 
 <!-- ORDERS -->
-
 <div class="card">
 
 <h2>📦 Customer Orders</h2>
@@ -372,7 +364,6 @@ Loading...
 
 
 <!-- LOGOUT -->
-
 <div class="card">
 
 <button
@@ -386,45 +377,24 @@ Loading...
 
 </div>
 
-
 </div>
 </div>
 
 
-<!-- ================= FIREBASE ================= -->
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-app-compat.js"></script>
 
-<script type="module">
+<script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-auth-compat.js"></script>
 
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  getDoc,
-  doc,
-  setDoc,
-  updateDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+<script src="https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore-compat.js"></script>
 
 
-/* ================= FIREBASE CONFIG ================= */
+<script>
 
 const firebaseConfig = {
 
   apiKey:
-  "AIzaSyDjG5fKH7apknSPMUCBs3pVa91Hj5vMnB4",
+  "AIzaSyDjG5fKH7apknSPMUCB3s5pVa91Hj5vMnB4",
 
   authDomain:
   "clothing-store-india.firebaseapp.com",
@@ -444,18 +414,15 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth = firebase.auth();
 
-const db = getFirestore(app);
-
-
-const ADMIN_EMAIL =
-"sk6457520@gmail.com";
+const db = firebase.firestore();
 
 
-/* ================= ELEMENTS ================= */
+const ADMIN_EMAIL = "sk6457520@gmail.com";
+
 
 const loginPage =
 document.getElementById("loginPage");
@@ -476,9 +443,9 @@ const loginMessage =
 document.getElementById("loginMessage");
 
 
-/* ================= LOGIN ================= */
+/* LOGIN */
 
-loginButton.addEventListener("click", async function(){
+loginButton.addEventListener("click", function(){
 
   const email =
   emailInput.value.trim();
@@ -487,11 +454,7 @@ loginButton.addEventListener("click", async function(){
   passwordInput.value;
 
 
-  loginMessage.innerHTML =
-  '<div class="message">Login ho raha hai...</div>';
-
-
-  if(!email){
+  if(email === ""){
 
     loginMessage.innerHTML =
     '<div class="message">Email bharen.</div>';
@@ -500,7 +463,7 @@ loginButton.addEventListener("click", async function(){
   }
 
 
-  if(!password){
+  if(password === ""){
 
     loginMessage.innerHTML =
     '<div class="message">Password bharen.</div>';
@@ -509,399 +472,415 @@ loginButton.addEventListener("click", async function(){
   }
 
 
-  try{
-
-    const result =
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+  loginMessage.innerHTML =
+  '<div class="message">⏳ Login ho raha hai...</div>';
 
 
-    if(result.user.email !== ADMIN_EMAIL){
+  auth.signInWithEmailAndPassword(
+    email,
+    password
+  )
 
-      await signOut(auth);
+  .then(function(result){
 
-      loginMessage.innerHTML =
-      '<div class="message">Sirf Admin account se login kar sakte hain.</div>';
+    if(
+      result.user.email.toLowerCase()
+      !== ADMIN_EMAIL.toLowerCase()
+    ){
 
-      return;
-    }
+      return auth.signOut()
+      .then(function(){
 
+        loginMessage.innerHTML =
+        '<div class="message">❌ Sirf Admin account se login kar sakte hain.</div>';
 
-    loginMessage.innerHTML =
-    '<div class="message">✅ Login successful...</div>';
-
-
-  }catch(error){
-
-    console.error(error);
-
-    loginMessage.innerHTML =
-    '<div class="message">❌ Login failed. Email/password check karein.</div>';
-
-  }
-
-});
-
-
-/* ================= ENTER KEY LOGIN ================= */
-
-passwordInput.addEventListener("keydown", function(event){
-
-  if(event.key === "Enter"){
-
-    loginButton.click();
-
-  }
-
-});
-
-
-/* ================= AUTH STATE ================= */
-
-onAuthStateChanged(auth, async function(user){
-
-  if(user && user.email === ADMIN_EMAIL){
-
-    loginPage.classList.add("hidden");
-
-    adminPage.classList.remove("hidden");
-
-
-    await loadSettings();
-
-    await loadProducts();
-
-    await loadOrders();
-
-  }
-
-  else{
-
-    loginPage.classList.remove("hidden");
-
-    adminPage.classList.add("hidden");
-
-  }
-
-});
-
-
-/* ================= LOGOUT ================= */
-
-document
-.getElementById("logoutButton")
-.addEventListener("click", async function(){
-
-  await signOut(auth);
-
-});
-
-
-/* ================= SETTINGS LOAD ================= */
-
-async function loadSettings(){
-
-  try{
-
-    const ref =
-    doc(db,"settings","store");
-
-    const snap =
-    await getDoc(ref);
-
-
-    if(snap.exists()){
-
-      const data =
-      snap.data();
-
-
-      document
-      .getElementById("storeName")
-      .value =
-      data.storeName || "";
-
-
-      document
-      .getElementById("upiId")
-      .value =
-      data.upiId || "";
-
-
-      document
-      .getElementById("logoUrl")
-      .value =
-      data.logoUrl || "";
-
-
-      document
-      .getElementById("logoPreview")
-      .src =
-      data.logoUrl || "";
+      });
 
     }
 
-  }catch(error){
+    loginMessage.innerHTML =
+    '<div class="message">✅ Login successful.</div>';
 
-    console.error(error);
+  })
 
-  }
+  .catch(function(error){
 
-}
+    console.log(error);
 
+    let message =
+    "❌ Login failed.";
 
-/* ================= LOGO PREVIEW ================= */
+    if(error.code === "auth/invalid-credential"){
+      message =
+      "❌ Email ya Password galat hai.";
+    }
 
-document
-.getElementById("logoUrl")
-.addEventListener("input", function(){
+    else if(error.code === "auth/user-not-found"){
+      message =
+      "❌ Ye Email Firebase me nahi mila.";
+    }
 
-  document
-  .getElementById("logoPreview")
-  .src =
-  this.value.trim();
+    else if(error.code === "auth/wrong-password"){
+      message =
+      "❌ Password galat hai.";
+    }
 
-});
+    else if(error.code === "auth/invalid-email"){
+      message =
+      "❌ Email format galat hai.";
+    }
 
+    else if(error.code === "auth/network-request-failed"){
+      message =
+      "❌ Internet connection check karein.";
+    }
 
-/* ================= SAVE SETTINGS ================= */
+    else if(error.code === "auth/too-many-requests"){
+      message =
+      "❌ Bahut baar login try hua hai. Thodi der baad try karein.";
+    }
 
-document
-.getElementById("saveSettingsButton")
-.addEventListener("click", async function(){
+    loginMessage.innerHTML =
+    '<div class="message">' +
+    message +
+    '</div>';
 
-  const storeName =
-  document
-  .getElementById("storeName")
-  .value
-  .trim();
-
-  const upiId =
-  document
-  .getElementById("upiId")
-  .value
-  .trim();
-
-  const logoUrl =
-  document
-  .getElementById("logoUrl")
-  .value
-  .trim();
-
-
-  if(!storeName){
-
-    alert("Shop Name bharen.");
-
-    return;
-  }
-
-
-  try{
-
-    await setDoc(
-
-      doc(db,"settings","store"),
-
-      {
-
-        storeName:storeName,
-
-        upiId:upiId,
-
-        logoUrl:logoUrl,
-
-        updatedAt:Date.now()
-
-      },
-
-      {merge:true}
-
-    );
-
-
-    document
-    .getElementById("settingsMessage")
-    .innerHTML =
-    '<div class="message">✅ Settings save ho gayi.</div>';
-
-
-  }catch(error){
-
-    console.error(error);
-
-    document
-    .getElementById("settingsMessage")
-    .innerHTML =
-    '<div class="message">❌ Settings save nahi hui.</div>';
-
-  }
+  });
 
 });
 
 
-/* ================= SAVE PRODUCT ================= */
+/* ENTER KEY */
 
-document
-.getElementById("saveProductButton")
-.addEventListener("click", async function(){
+passwordInput.addEventListener(
+  "keydown",
+  function(event){
 
-  const productId =
-  document
-  .getElementById("productId")
-  .value
-  .trim();
+    if(event.key === "Enter"){
 
-  const name =
-  document
-  .getElementById("productName")
-  .value
-  .trim();
+      loginButton.click();
 
-  const price =
-  document
-  .getElementById("productPrice")
-  .value
-  .trim();
+    }
 
-  const category =
-  document
-  .getElementById("productCategory")
-  .value;
-
-  const image =
-  document
-  .getElementById("productImage")
-  .value
-  .trim();
-
-
-  if(!name){
-
-    alert("Product Name bharen.");
-
-    return;
   }
+);
 
 
-  if(!price){
+/* AUTH CHECK */
 
-    alert("Product Price bharen.");
+auth.onAuthStateChanged(
+  function(user){
 
-    return;
-  }
+    if(
+      user &&
+      user.email.toLowerCase()
+      === ADMIN_EMAIL.toLowerCase()
+    ){
 
+      loginPage.classList.add("hidden");
 
-  if(!image){
+      adminPage.classList.remove("hidden");
 
-    alert("Product Image URL bharen.");
+      loadSettings();
 
-    return;
-  }
+      loadProducts();
 
-
-  try{
-
-    if(productId){
-
-      await updateDoc(
-
-        doc(db,"products",productId),
-
-        {
-
-          name:name,
-
-          price:Number(price),
-
-          category:category,
-
-          image:image,
-
-          updatedAt:Date.now()
-
-        }
-
-      );
-
-
-      document
-      .getElementById("productMessage")
-      .innerHTML =
-      '<div class="message">✅ Product update ho gaya.</div>';
+      loadOrders();
 
     }
 
     else{
 
-      await addDoc(
+      loginPage.classList.remove("hidden");
 
-        collection(db,"products"),
+      adminPage.classList.add("hidden");
 
-        {
+    }
 
-          name:name,
-
-          price:Number(price),
-
-          category:category,
-
-          image:image,
-
-          createdAt:Date.now(),
-
-          updatedAt:Date.now()
-
-        }
-
-      );
+  }
+);
 
 
-      document
-      .getElementById("productMessage")
-      .innerHTML =
-      '<div class="message">✅ Product add ho gaya.</div>';
+/* LOGOUT */
+
+document
+.getElementById("logoutButton")
+.addEventListener(
+  "click",
+  function(){
+
+    auth.signOut();
+
+  }
+);
+
+
+/* LOAD SETTINGS */
+
+function loadSettings(){
+
+  db.collection("settings")
+  .doc("store")
+  .get()
+
+  .then(function(snapshot){
+
+    if(snapshot.exists){
+
+      const data =
+      snapshot.data();
+
+      document.getElementById("storeName").value =
+      data.storeName || "";
+
+      document.getElementById("upiId").value =
+      data.upiId || "";
+
+      document.getElementById("logoUrl").value =
+      data.logoUrl || "";
+
+      document.getElementById("logoPreview").src =
+      data.logoUrl || "";
+
+    }
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+  });
+
+}
+
+
+/* LOGO PREVIEW */
+
+document
+.getElementById("logoUrl")
+.addEventListener(
+  "input",
+  function(){
+
+    document.getElementById("logoPreview").src =
+    this.value.trim();
+
+  }
+);
+
+
+/* SAVE SETTINGS */
+
+document
+.getElementById("saveSettingsButton")
+.addEventListener(
+  "click",
+  function(){
+
+    const storeName =
+    document.getElementById("storeName")
+    .value.trim();
+
+    const upiId =
+    document.getElementById("upiId")
+    .value.trim();
+
+    const logoUrl =
+    document.getElementById("logoUrl")
+    .value.trim();
+
+
+    if(storeName === ""){
+
+      alert("Shop Name bharen.");
+
+      return;
 
     }
 
 
-    clearProductForm();
+    db.collection("settings")
+    .doc("store")
+    .set({
 
-    await loadProducts();
+      storeName:storeName,
 
+      upiId:upiId,
 
-  }catch(error){
+      logoUrl:logoUrl,
 
-    console.error(error);
+      updatedAt:Date.now()
 
-    alert("Product save nahi hua.");
+    },{
+      merge:true
+    })
+
+    .then(function(){
+
+      document.getElementById(
+        "settingsMessage"
+      ).innerHTML =
+      '<div class="message">✅ Settings save ho gayi.</div>';
+
+    })
+
+    .catch(function(error){
+
+      console.log(error);
+
+      document.getElementById(
+        "settingsMessage"
+      ).innerHTML =
+      '<div class="message">❌ Settings save nahi hui.</div>';
+
+    });
 
   }
+);
 
-});
+
+/* SAVE PRODUCT */
+
+document
+.getElementById("saveProductButton")
+.addEventListener(
+  "click",
+  function(){
+
+    const productId =
+    document.getElementById("productId")
+    .value.trim();
+
+    const name =
+    document.getElementById("productName")
+    .value.trim();
+
+    const price =
+    document.getElementById("productPrice")
+    .value.trim();
+
+    const category =
+    document.getElementById("productCategory")
+    .value;
+
+    const image =
+    document.getElementById("productImage")
+    .value.trim();
 
 
-/* ================= LOAD PRODUCTS ================= */
+    if(name === ""){
 
-async function loadProducts(){
+      alert("Product Name bharen.");
+
+      return;
+
+    }
+
+
+    if(price === ""){
+
+      alert("Product Price bharen.");
+
+      return;
+
+    }
+
+
+    if(image === ""){
+
+      alert("Product Image URL bharen.");
+
+      return;
+
+    }
+
+
+    const productData = {
+
+      name:name,
+
+      price:Number(price),
+
+      category:category,
+
+      image:image,
+
+      updatedAt:Date.now()
+
+    };
+
+
+    let request;
+
+
+    if(productId){
+
+      request =
+      db.collection("products")
+      .doc(productId)
+      .update(productData);
+
+    }
+
+    else{
+
+      productData.createdAt =
+      Date.now();
+
+      request =
+      db.collection("products")
+      .add(productData);
+
+    }
+
+
+    request
+
+    .then(function(){
+
+      document.getElementById(
+        "productMessage"
+      ).innerHTML =
+      '<div class="message">✅ Product save ho gaya.</div>';
+
+      clearProductForm();
+
+      loadProducts();
+
+    })
+
+    .catch(function(error){
+
+      console.log(error);
+
+      alert(
+        "❌ Product save nahi hua."
+      );
+
+    });
+
+  }
+);
+
+
+/* LOAD PRODUCTS */
+
+function loadProducts(){
 
   const list =
-  document.getElementById("productsList");
+  document.getElementById(
+    "productsList"
+  );
 
   list.innerHTML =
   "Loading products...";
 
 
-  try{
+  db.collection("products")
+  .get()
 
-    const snapshot =
-    await getDocs(
-      collection(db,"products")
-    );
-
+  .then(function(snapshot){
 
     if(snapshot.empty){
 
@@ -909,188 +888,184 @@ async function loadProducts(){
       '<div class="message">Abhi koi product nahi hai.</div>';
 
       return;
+
     }
 
 
-    const products=[];
+    const products = [];
 
 
-    snapshot.forEach(function(item){
+    snapshot.forEach(
+      function(doc){
 
-      products.push({
+        products.push({
 
-        id:item.id,
+          id:doc.id,
 
-        ...item.data()
+          ...doc.data()
 
-      });
+        });
 
-    });
-
-
-    products.sort(function(a,b){
-
-      return (b.createdAt || 0) -
-             (a.createdAt || 0);
-
-    });
+      }
+    );
 
 
-    list.innerHTML="";
+    products.sort(
+      function(a,b){
+
+        return (b.createdAt || 0)
+        -
+        (a.createdAt || 0);
+
+      }
+    );
 
 
-    products.forEach(function(product){
-
-      const div =
-      document.createElement("div");
-
-      div.className="product";
+    list.innerHTML = "";
 
 
-      const img =
-      document.createElement("img");
+    products.forEach(
+      function(product){
 
-      img.src =
-      product.image || "";
+        const div =
+        document.createElement("div");
 
-
-      const name =
-      document.createElement("h3");
-
-      name.textContent =
-      product.name || "";
+        div.className =
+        "product";
 
 
-      const price =
-      document.createElement("div");
+        const img =
+        document.createElement("img");
 
-      price.className="price";
-
-      price.textContent =
-      "₹" + (product.price || 0);
+        img.src =
+        product.image || "";
 
 
-      const category =
-      document.createElement("div");
+        const name =
+        document.createElement("h3");
 
-      category.textContent =
-      "Category: " +
-      (product.category || "");
-
-
-      const edit =
-      document.createElement("button");
-
-      edit.className="blue";
-
-      edit.textContent="✏️ EDIT";
+        name.textContent =
+        product.name || "";
 
 
-      edit.addEventListener(
-      "click",
-      function(){
+        const price =
+        document.createElement("div");
 
-        editProduct(product);
+        price.className =
+        "price";
 
-      });
-
-
-      const del =
-      document.createElement("button");
-
-      del.className="red";
-
-      del.textContent="🗑️ DELETE";
+        price.textContent =
+        "₹" + (product.price || 0);
 
 
-      del.addEventListener(
-      "click",
-      function(){
+        const category =
+        document.createElement("div");
 
-        deleteProduct(product.id);
-
-      });
-
-
-      div.appendChild(img);
-
-      div.appendChild(name);
-
-      div.appendChild(price);
-
-      div.appendChild(category);
-
-      div.appendChild(edit);
-
-      div.appendChild(del);
-
-      list.appendChild(div);
-
-    });
+        category.textContent =
+        "Category: " +
+        (product.category || "");
 
 
-  }catch(error){
+        const edit =
+        document.createElement("button");
 
-    console.error(error);
+        edit.className =
+        "blue";
+
+        edit.textContent =
+        "✏️ EDIT";
+
+
+        edit.onclick =
+        function(){
+
+          editProduct(product);
+
+        };
+
+
+        const del =
+        document.createElement("button");
+
+        del.className =
+        "red";
+
+        del.textContent =
+        "🗑️ DELETE";
+
+
+        del.onclick =
+        function(){
+
+          deleteProduct(product.id);
+
+        };
+
+
+        div.appendChild(img);
+
+        div.appendChild(name);
+
+        div.appendChild(price);
+
+        div.appendChild(category);
+
+        div.appendChild(edit);
+
+        div.appendChild(del);
+
+
+        list.appendChild(div);
+
+      }
+    );
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
 
     list.innerHTML =
-    '<div class="message">Products load nahi ho rahe.</div>';
+    '<div class="message">❌ Products load nahi ho rahe.</div>';
 
-  }
+  });
 
 }
 
 
-/* ================= EDIT PRODUCT ================= */
+/* EDIT PRODUCT */
 
 function editProduct(product){
 
-  document
-  .getElementById("productId")
-  .value =
-  product.id;
+  document.getElementById("productId").value =
+  product.id || "";
 
-
-  document
-  .getElementById("productName")
-  .value =
+  document.getElementById("productName").value =
   product.name || "";
 
-
-  document
-  .getElementById("productPrice")
-  .value =
+  document.getElementById("productPrice").value =
   product.price || "";
 
-
-  document
-  .getElementById("productCategory")
-  .value =
+  document.getElementById("productCategory").value =
   product.category || "Men";
 
-
-  document
-  .getElementById("productImage")
-  .value =
+  document.getElementById("productImage").value =
   product.image || "";
 
 
-  document
-  .getElementById("productTitle")
+  document.getElementById("productTitle")
   .textContent =
   "✏️ Edit Product";
 
 
-  document
-  .getElementById("saveProductButton")
+  document.getElementById("saveProductButton")
   .textContent =
   "UPDATE PRODUCT";
 
 
-  document
-  .getElementById("cancelEditButton")
-  .classList
-  .remove("hidden");
+  document.getElementById("cancelEditButton")
+  .classList.remove("hidden");
 
 
   window.scrollTo({
@@ -1104,18 +1079,408 @@ function editProduct(product){
 }
 
 
-/* ================= CANCEL EDIT ================= */
-
-document
-.getElementById("cancelEditButton")
-.addEventListener("click", function(){
-
-  clearProductForm();
-
-});
-
+/* CLEAR PRODUCT */
 
 function clearProductForm(){
 
-  document
-  
+  document.getElementById("productId").value =
+  "";
+
+  document.getElementById("productName").value =
+  "";
+
+  document.getElementById("productPrice").value =
+  "";
+
+  document.getElementById("productCategory").value =
+  "Men";
+
+  document.getElementById("productImage").value =
+  "";
+
+
+  document.getElementById("productTitle")
+  .textContent =
+  "➕ Add New Product";
+
+
+  document.getElementById("saveProductButton")
+  .textContent =
+  "ADD PRODUCT";
+
+
+  document.getElementById("cancelEditButton")
+  .classList.add("hidden");
+
+}
+
+
+document
+.getElementById("cancelEditButton")
+.addEventListener(
+  "click",
+  clearProductForm
+);
+
+
+/* DELETE PRODUCT */
+
+function deleteProduct(id){
+
+  if(
+    !confirm(
+      "Kya aap is product ko delete karna chahte hain?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  db.collection("products")
+  .doc(id)
+  .delete()
+
+  .then(function(){
+
+    loadProducts();
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    alert(
+      "❌ Product delete nahi hua."
+    );
+
+  });
+
+}
+
+
+/* LOAD ORDERS */
+
+function loadOrders(){
+
+  const list =
+  document.getElementById(
+    "ordersList"
+  );
+
+  list.innerHTML =
+  "Loading orders...";
+
+
+  db.collection("orders")
+  .get()
+
+  .then(function(snapshot){
+
+    if(snapshot.empty){
+
+      list.innerHTML =
+      '<div class="message">Abhi koi order nahi hai.</div>';
+
+      return;
+
+    }
+
+
+    const orders = [];
+
+
+    snapshot.forEach(
+      function(doc){
+
+        orders.push({
+
+          id:doc.id,
+
+          ...doc.data()
+
+        });
+
+      }
+    );
+
+
+    orders.sort(
+      function(a,b){
+
+        return (b.createdAt || 0)
+        -
+        (a.createdAt || 0);
+
+      }
+    );
+
+
+    list.innerHTML = "";
+
+
+    orders.forEach(
+      function(order){
+
+        const div =
+        document.createElement("div");
+
+        div.className =
+        "order";
+
+
+        const title =
+        document.createElement("div");
+
+        title.className =
+        "order-id";
+
+        title.textContent =
+        "📦 Order ID: " +
+        order.id;
+
+
+        const info =
+        document.createElement("div");
+
+
+        let text = "";
+
+
+        if(order.name || order.customerName){
+
+          text +=
+          "Name: " +
+          (order.name || order.customerName) +
+          "\n";
+
+        }
+
+
+        if(order.mobile || order.phone){
+
+          text +=
+          "Mobile: " +
+          (order.mobile || order.phone) +
+          "\n";
+
+        }
+
+
+        if(order.address){
+
+          text +=
+          "Address: " +
+          order.address +
+          "\n";
+
+        }
+
+
+        if(order.pincode || order.pinCode){
+
+          text +=
+          "PIN Code: " +
+          (order.pincode || order.pinCode) +
+          "\n";
+
+        }
+
+
+        if(order.total){
+
+          text +=
+          "Total: ₹" +
+          order.total +
+          "\n";
+
+        }
+
+
+        if(order.createdAt){
+
+          text +=
+          "Time: " +
+          new Date(
+            order.createdAt
+          ).toLocaleString("en-IN");
+
+        }
+
+
+        info.style.whiteSpace =
+        "pre-line";
+
+        info.textContent =
+        text;
+
+
+        const status =
+        document.createElement("select");
+
+
+        const statusList = [
+
+          "Pending",
+
+          "Confirmed",
+
+          "Shipped",
+
+          "Delivered",
+
+          "Cancelled"
+
+        ];
+
+
+        statusList.forEach(
+          function(value){
+
+            const option =
+            document.createElement(
+              "option"
+            );
+
+            option.value =
+            value;
+
+            option.textContent =
+            value;
+
+            status.appendChild(
+              option
+            );
+
+          }
+        );
+
+
+        status.value =
+        order.status ||
+        "Pending";
+
+
+        status.onchange =
+        function(){
+
+          updateOrderStatus(
+            order.id,
+            status.value
+          );
+
+        };
+
+
+        const del =
+        document.createElement("button");
+
+        del.className =
+        "red";
+
+        del.textContent =
+        "🗑️ DELETE ORDER";
+
+
+        del.onclick =
+        function(){
+
+          deleteOrder(
+            order.id
+          );
+
+        };
+
+
+        div.appendChild(title);
+
+        div.appendChild(info);
+
+        div.appendChild(
+          document.createElement("br")
+        );
+
+        div.appendChild(status);
+
+        div.appendChild(del);
+
+
+        list.appendChild(div);
+
+      }
+    );
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    list.innerHTML =
+    '<div class="message">❌ Orders load nahi ho rahe.</div>';
+
+  });
+
+}
+
+
+/* REFRESH ORDERS */
+
+document
+.getElementById("refreshOrdersButton")
+.addEventListener(
+  "click",
+  loadOrders
+);
+
+
+/* UPDATE ORDER STATUS */
+
+function updateOrderStatus(
+  id,
+  status
+){
+
+  db.collection("orders")
+  .doc(id)
+  .update({
+
+    status:status,
+
+    updatedAt:Date.now()
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+    alert(
+      "❌ Order status update nahi hua."
+    );
+
+  });
+
+}
+
+
+/* DELETE ORDER */
+
+function deleteOrder(id){
+
+  if(
+    !confirm(
+      "Kya aap is order ko delete karna chahte hain?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  db.collection("orders")
+  .doc(id)
+  .de
